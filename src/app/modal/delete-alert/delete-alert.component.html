@@ -1,0 +1,42 @@
+
+  <div class="row mt-3 me-3">
+    <div class="col-md-10 col-sm-10"></div>
+    <div class="col-md-2 col-sm-2 text-right">
+      <button
+        type="button"
+        class="close"
+        data-dismiss="modal"
+        aria-label="Close"
+        (click)="activeModal.close('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="modal-body text-center px-0">
+    <img
+      src="../../../../assets/img/warning.png"
+      class="mb-3"
+      width="100"
+      alt=""
+    />
+    <h4 class="text-warning">Are you sure you want to Delete ?</h4>
+    <div class="clearfix modal-text">
+      <label *ngIf="title">
+        <h3>{{ title }}</h3>
+      </label>
+    </div>
+  </div>
+  <div class="model-footer border-0 text-center px-0 pb-4">
+    <div class="clearfix py-2">
+      <button
+        class="btn btn-danger me-2"
+        (click)="activeModal.dismiss('Ok click')"
+      >
+        OK
+      </button>
+      <button class="btn btn-success" (click)="activeModal.close('Cancel click')">
+        Cancel
+      </button>
+    </div>
+  </div>

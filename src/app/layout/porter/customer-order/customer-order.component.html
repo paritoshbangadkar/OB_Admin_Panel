@@ -1,0 +1,135 @@
+<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" (activeIdChange)="navChange()">
+    <li [ngbNavItem]="1">
+        <a ngbNavLink>Customer Porter Order List</a>
+        <ng-template ngbNavContent>
+            <div class="container-fluid animated fadeIn">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-md-5">
+                                <form class="d-flex">
+                                    <input class="form-control" type="text" placeholder="Search" aria-label="Search"
+                                        [(ngModel)]="search" [ngModelOptions]="{ standalone: true }"
+                                        (keyup)="refreshList('search')" />
+                                    <div class="col-auto">
+                                        <button type="button" type="submit" (click)="refreshList('clear')"
+                                            class="btn btn-outline-danger">
+                                            <i class="fa fa-filter" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="table-responsive text-nowrap">
+                            <table class="table table-striped table-hover table-bordered table-sticky">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th>Sr.No.</th>
+                                        <th>Order Number</th>
+                                        <th>Payment Details</th>
+                                        <th>Order Status</th>
+                                        <th>Created At</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of orderArr; let i = index">
+                                        <td (click)="open(item)">{{ pageSize * (page - 1) + (i + 1) }}</td>
+                                        <td (click)="open(item)">{{ item.order_id }}</td>
+
+                                        <td>
+                                            <p><strong>Delivery Charge:</strong>
+                                                {{item.paymentDetail?.deliveryCharge?item.paymentDetail?.deliveryCharge:0
+                                                }}</p>
+                                            <p><strong>Platform Fee:</strong> {{
+                                                item.paymentDetail?.platformFee?item.paymentDetail?.platformFee:0 }}
+                                            </p>
+                                            <p><strong>Total Price: </strong>{{
+                                                item.paymentDetail?.totalPrice?item.paymentDetail?.totalPrice:0 }}
+                                            </p>
+                                            <p><strong>GST :</strong>
+                                                {{item.paymentDetail?.GST?item.paymentDetail?.GST:0 }}</p>
+                                            <p><strong>Grand Total:</strong> {{
+                                                item.paymentDetail?.grandTotal?item.paymentDetail?.grandTotal:0 }}
+                                            </p>
+                                        </td>
+                                        <td (click)="open(item)">{{ item.porterStatus | titlecase }}</td>
+                                        <td (click)="open(item)">{{ item.createdAt | date:"dd/MM/yyyy hh:mm a" }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <app-custom-pagination [(page)]="page" [(pageSize)]="pageSize" [(collection)]="collection"
+                            (myOutput)="onChangePage(page)"></app-custom-pagination>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+        <a ngbNavLink>Business Porter Order List</a>
+        <ng-template ngbNavContent>
+            <div class="container-fluid animated fadeIn">
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-md-5">
+                            <form class="d-flex">
+                                <input class="form-control" type="text" placeholder="Search" aria-label="Search"
+                                    [(ngModel)]="search" [ngModelOptions]="{ standalone: true }"
+                                    (keyup)="refreshList('search')" />
+                                <div class="col-auto">
+                                    <button type="button" type="submit" (click)="refreshList('clear')"
+                                        class="btn btn-outline-danger">
+                                        <i class="fa fa-filter" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-striped table-hover table-bordered table-sticky">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>Sr.No.</th>
+                                    <th>Order Number</th>
+                                    <th>Payment Details</th>
+                                    <th>Order Status</th>
+                                    <th>Created At</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of orderArr; let i = index">
+                                    <td (click)="open(item)">{{ pageSize * (page - 1) + (i + 1) }}</td>
+                                    <td (click)="open(item)">{{ item.order_id }}</td>
+
+                                    <td>
+                                        <p><strong>Delivery Charge:</strong>
+                                            {{item.paymentDetail?.deliveryCharge?item.paymentDetail?.deliveryCharge:0
+                                            }}</p>
+                                        <p><strong>Platform Fee:</strong> {{
+                                            item.paymentDetail?.platformFee?item.paymentDetail?.platformFee:0 }}
+                                        </p>
+                                        <p><strong>Total Price: </strong>{{
+                                            item.paymentDetail?.totalPrice?item.paymentDetail?.totalPrice:0 }}
+                                        </p>
+                                        <p><strong>GST :</strong>
+                                            {{item.paymentDetail?.GST?item.paymentDetail?.GST:0 }}</p>
+                                        <p><strong>Grand Total:</strong> {{
+                                            item.paymentDetail?.grandTotal?item.paymentDetail?.grandTotal:0 }}
+                                        </p>
+                                    </td>
+                                    <td (click)="open(item)">{{ item.porterStatus | titlecase }}</td>
+                                    <td (click)="open(item)">{{ item.createdAt | date:"dd/MM/yyyy hh:mm a" }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <app-custom-pagination [(page)]="page" [(pageSize)]="pageSize" [(collection)]="collection"
+                        (myOutput)="onChangePage(page)"></app-custom-pagination>
+                </div>
+            </div>
+
+        </ng-template>
+    </li>
+</ul>
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>

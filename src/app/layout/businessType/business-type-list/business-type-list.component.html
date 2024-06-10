@@ -1,0 +1,162 @@
+<div class="container-fluid animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-auto">
+          <h3 class="mb-0">Business List</h3>
+        </div>
+        <div class="col-auto">
+          <button type="button" (click)="view( null)" class="btn btn-outline-primary">
+            <i class="fa fa-plus-circle me-1"></i>
+            Business
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row mb-2">
+        <div class="col-md-5">
+          <form class="d-flex">
+            <input class="form-control" type="text" placeholder="Search" aria-label="Search" [(ngModel)]="search"
+              [ngModelOptions]="{ standalone: true }" (keyup)="refreshList('search')" />
+            <div class="col-auto">
+              <button type="button" type="submit" (click)="refreshList('clear')" class="btn btn-outline-danger">
+                <i class="fa fa-filter" aria-hidden="true"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="table-responsive text-nowrap">
+        <table class="table table-striped table-hover table-bordered table-sticky">
+          <thead class="table-primary">
+            <tr>
+              <th scope="col">Sr.No.</th>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Created At</th>
+              <th scope="col">Status</th>
+              <th scope="col">Image</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let u of businessArr; let i = index">
+              <td>{{ pageSize * (page - 1) + (i + 1) }}</td>
+
+              <td>{{ u.name | titlecase }}</td>
+              <td>
+                {{ u.description | titlecase }}
+              </td>
+              <td>{{ u.createdAt | date:"dd/MM/yyyy hh:mm a" }}</td>
+              <td>{{ u.status | titlecase }}</td>
+
+              <td class="text-nowrap">
+                <div class="text-center">
+                  <img class="avatar" [src]="u.image || 'assets/img/placeholder_product.svg'" />
+                </div>
+              </td>
+              <td>
+                <div class="col">
+                  <div ngbDropdown container="body">
+                    <button ngbDropdownToggle id="dropdownBasic1"
+                      class="btn btn-icon btn-2 btn-sm btn-neutral text-default" type="button">
+                      <span class="btn-inner--icon"><i class="fa fa-ellipsis-v text-danger"
+                          aria-hidden="true"></i></span>
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                      <button ngbDropdownItem class="btn btn-sm btn-outline-warning me-1" (click)="view(u._id)">
+                        <i class="fa fa-pencil-square text-danger" aria-hidden="true"></i>Edit
+                      </button>
+                      <button ngbDropdownItem (click)="openConfirmStatusChange(u,changeStatus)">
+                        <ng-container *ngIf="u?.status === 'active'">
+                          <i class="fa fa-lock text-danger"></i>Inactive
+                        </ng-container>
+                        <ng-container *ngIf="u?.status === 'inactive'">
+                          <i class="fa fa-unlock text-danger"></i>Active
+                        </ng-container>
+                      </button>
+                      <button ngbDropdownItem class="btn btn-sm btn-outline-danger" (click)="open(u, alertMsg)"><i
+                          class="fa fa-trash text-danger"></i>Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <app-custom-pagination [(page)]="page" [(pageSize)]="pageSize" [(collection)]="collection"
+        (myOutput)="onChangePage(page)"></app-custom-pagination>
+    </div>
+  </div>
+</div>
+
+<ng-template #alertMsg let-modal>
+  <div class="row mt-3 me-2">
+    <div class="col-md-10 col-sm-10"></div>
+    <div class="col-md-2 col-sm-2 text-right">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+        (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="modal-body text-center px-0">
+    <h5 class="text-warning">
+      <img src="../../../../assets/img/warning.png" class="mr-3 delete-icon" alt="" />
+
+      Are you sure you want to Delete ?
+    </h5>
+    <div class="clearfix modal-text">
+      <label *ngIf="selectedRow.title">
+        <h5>{{ selectedRow.title }}</h5>
+      </label>
+    </div>
+  </div>
+  <div class="model-footer border-0 text-center px-0 pb-4">
+    <div class="clearfix">
+      <button class="btn btn-danger me-2" (click)="delete()">OK</button>
+      <button class="btn btn-success" (click)="modal.dismiss('Cross click')">
+        Cancel
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #changeStatus let-modal>
+  <div class="row mt-3 me-3">
+    <div class="col-md-10 col-sm-10"></div>
+    <div class="col-md-2 col-sm-2 text-right">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+        (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="modal-body text-center px-0">
+    <h5 class="text-warning" *ngIf="selectedRow?.status === 'active'">
+      <img src="../../../../assets/img/warning.png" class="mr-3 delete-icon" *ngIf="selectedRow?.status === 'active'"
+        alt="" />
+      Are you sure you want to inactive?
+    </h5>
+    <h5 class="text-warning" *ngIf="selectedRow?.status === 'inactive'">
+      <img src="../../../../assets/img/warning.png" class="mr-3 delete-icon" *ngIf="selectedRow?.status === 'inactive'"
+        alt="" />
+      Are you sure you want to active?
+    </h5>
+    <div class="clearfix modal-text"></div>
+  </div>
+  <div class="model-footer border-0 text-center px-0 pb-4">
+    <div class="clearfix py-2">
+      <button class="btn btn-danger me-2" (click)="changeCustomerStatus(this.selectedRow._id)">
+        OK
+      </button>
+      <button class="btn btn-success" (click)="modal.dismiss('Cross click')">
+        Cancel
+      </button>
+    </div>
+  </div>
+</ng-template>

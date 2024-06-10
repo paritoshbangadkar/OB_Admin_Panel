@@ -1,0 +1,57 @@
+<div class="container-fluid animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-auto">
+          <h3 class="mb-0">User Analytics List</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row mb-2">
+        <div class="col-md-5">
+          <form class="d-flex">
+            <input class="form-control" type="text" placeholder="Search" aria-label="Search" [(ngModel)]="search"
+              [ngModelOptions]="{ standalone: true }" (keyup)="refreshList('search')" />
+            <div class="col-auto">
+              <button type="button" type="submit" (click)="refreshList('clear')" class="btn btn-outline-danger">
+                <i class="fa fa-filter" aria-hidden="true"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="table-responsive text-nowrap">
+        <table class="table table-striped table-hover table-bordered table-sticky">
+          <thead class="table-primary">
+            <tr>
+              <th scope="col">Sr.No.</th>
+              <th scope="col">Name</th>
+              <th scope="col">Role</th>
+              <th scope="col">Shop Name</th>
+              <th scope="col">User Action</th>
+              <th scope="col">Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of userAnalyticsList; let i = index">
+              <td>{{ pageSize * (page - 1) + (i + 1) }}</td>
+              <td>{{ item.User.firstName | titlecase }} {{ item.User.lastName | titlecase }}</td>
+              <td>
+                {{ item.role | titlecase }}
+              </td>
+              <td>
+                {{ item?.shopDetails?.shopName ? item?.shopDetails?.shopName : '-'| titlecase }}
+              </td>
+              <td>{{ transformUserActionType(item.userActionType) }}</td>
+              <td>{{ item.createdAt | date:"dd/MM/yyyy hh:mm a" }}</td>
+            </tr>
+          </tbody>        </table>
+      </div>
+      <app-custom-pagination [(page)]="page" [(pageSize)]="pageSize" [(collection)]="collection"
+        (myOutput)="onChangePage(page)"></app-custom-pagination>
+    </div>
+  </div>
+</div>

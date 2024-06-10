@@ -1,0 +1,63 @@
+<div class="d-flex">
+	<label class="mt-0">
+		Websites
+		<a type="button" class="ml-3 text-capitalize" (click)="addEdit()">
+			<u>add Website</u>
+		</a>
+	</label>
+</div>
+
+<div class="row justify-content-start align-items-center">
+	<div class="card-deck col-lg-4 col-md-5 col-sm-12 pt-3" *ngFor="let item of dataList">
+		<div class="card">
+			<div class="card-body">
+				<p class="text-default ">
+					{{item.webLinkName}}<br>
+					<span>{{item.url}}</span>
+				</p>
+				<div class="text-right">
+					<a type="button" class="text-default ml-3 text-capitalize" (click)="addEdit(item)">
+						<u>edit</u>
+					</a>
+					<a type="button" class="text-default ml-3 text-capitalize" (click)="open(item, alertMsg)">
+						<u>Delete</u>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<ng-template #alertMsg let-modal>
+    <div class="row mt-3 me-2">
+        <div class="col-md-10 col-sm-10"></div>
+        <div class="col-md-2 col-sm-2 text-right">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body text-center px-0">
+        <h5 class="text-warning">
+            <img src="../../../../assets/img/warning.png" class="mr-3 delete-icon" alt="" />
+
+            Are you sure you want to Delete ?
+        </h5>
+        <div class="clearfix modal-text">
+            <label *ngIf="selectedRow.webLinkName">
+                <h5>{{ selectedRow.webLinkName }}</h5>
+            </label>
+        </div>
+    </div>
+    <div class="model-footer border-0 text-center px-0 pb-4">
+        <div class="clearfix">
+            <button class="btn btn-danger me-2" (click)="delete()">OK</button>
+            <button class="btn btn-success" (click)="modal.dismiss('Cross click')">
+                Cancel
+            </button>
+        </div>
+    </div>
+</ng-template>

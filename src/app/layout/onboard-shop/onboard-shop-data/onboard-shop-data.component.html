@@ -1,0 +1,60 @@
+<div class="container-fluid animated fadeIn">
+
+    <div class="card-header my-3">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-8">
+                <h5 class="mb-0">Total Shop: {{this.validShopData.length + this.inValidShopData.length}}</h5>
+                <h5 class="mb-0">Valid Shop: {{ this.validShopData.length}}</h5>
+                <h5 class="mb-0">Invalid Shop: {{this.inValidShopData?.length}}</h5>
+            </div>
+            <div class="col-2 text-right">
+                <button type="button" class="btn btn-sm btn-outline-danger" aria-label="Close" (click)="saveShopData()">
+                    <span class="btn-inner--icon">Save </span>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-danger" aria-label="Close" (click)="dismissModal()">
+                    <span class="btn-inner--icon">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 justify-content-center align-items-center">
+                <h4>Invalid Shop Record</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive text-nowrap">
+            <table class="table table-striped table-hover table-sticky">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Sr.No</th>
+                        <th>Business Name</th>
+                        <th>Owner Name</th>
+                        <th>Mobile No.</th>
+                        <th>Reason</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of inValidShopData; let i = index">
+                        <td>{{ pageSize * (page - 1) + (i + 1) }}</td>
+                        <td>{{ item?.shopName | titlecase }}</td>
+                        <td>{{ item?.firstName | titlecase }} {{ item?.lastName | titlecase }}
+                        </td>
+                        <td>{{ item?.mobileNumber }}</td>
+                        <td>
+                            <div *ngFor="let reason of item.reason">
+                                {{ reason | titlecase }}
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <app-custom-pagination [(page)]=" page" [(pageSize)]="pageSize" [(collection)]="collection"
+            (myOutput)="onChangePage(page)"></app-custom-pagination>
+    </div>
+
+</div>

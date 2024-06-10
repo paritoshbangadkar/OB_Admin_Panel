@@ -1,0 +1,18 @@
+td{
+    vertical-align: middle !important;
+}
+
+.dropdown-toggle::after {
+   border-top: 0em solid !important;
+    border-right: 0 solid transparent;
+    border-bottom: 0;
+    border-left: 0 solid transparent;
+  }
+
+.mar{
+  margin-top:  26px !important;
+}
+.submit{
+  margin-top: 29px !important;
+  padding: 0px;
+}

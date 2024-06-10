@@ -1,0 +1,15 @@
+.close-btn{
+    display: flex;
+    justify-content: end;
+    .btn-icon{
+        width: 10%;
+        &:focus{
+            box-shadow: none !important;
+        }
+    }
+    .btn-icon:active{
+        border: none !important;
+        outline: none;
+        border-color: none !important;
+    }
+}

@@ -1,0 +1,39 @@
+<div
+  class="row justify-content-between align-items-center pt-2 pagination-sm m-0"
+>
+  <div class="col-md-auto">
+    <ngb-pagination
+      [collectionSize]="collection"
+      [(page)]="page"
+      [pageSize]="pageSize"
+      [maxSize]="4"
+      [rotate]="true"
+      [boundaryLinks]="true"
+      (pageChange)="onChangePage(page)"
+    >
+      <ng-template ngbPaginationFirst> << </ng-template>
+      <ng-template ngbPaginationLast> >> </ng-template>
+      <ng-template ngbPaginationPrevious> < </ng-template>
+      <ng-template ngbPaginationNext> > </ng-template>
+      <ng-template ngbPaginationEllipsis> ... </ng-template>
+      <ng-template ngbPaginationNumber class="custompage" let-page>
+        {{ page }}
+      </ng-template>
+    </ngb-pagination>
+  </div>
+  <div class="col-md-auto">
+    <select
+      class="custom-select"
+      [(ngModel)]="pageSize"
+      (change)="onChangePage($event)"
+    >
+      <option
+        *ngFor="let options of pageLimitOptions"
+        [value]="options.value"
+        [selected]="options.value == currentPageLimit"
+      >
+        {{ options.value }} item per page
+      </option>
+    </select>
+  </div>
+</div>

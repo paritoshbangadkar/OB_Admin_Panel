@@ -1,0 +1,114 @@
+<div class="container-fluid animated fadeIn">
+  <div class="card shadow-sm">
+    <div class="card-header">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-auto">
+          <h3 class="mb-0">Notification Form</h3>
+        </div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-danger" (click)="goBack()">
+            <i class="fa fa-arrow-left me-1" aria-hidden="true"></i>
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="notificationForm" class="form-horizontal">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="mb-3">
+              <label class="form-label">
+                Title
+                <span class="text-danger">*</span>
+              </label>
+              <input formControlName="title" type="text" class="form-control" placeholder="Enter title" />
+            </div>
+            <div class="text-left" *ngFor="let error of errorMessages.title">
+              <ng-container *ngIf="form.title.hasError(error.type) && (form.title.dirty || form.title.touched)">
+                <small class="error-message">{{error.message}}</small>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="mb-3">
+              <label class="form-label">
+                Message
+                <span class="text-danger">*</span>
+              </label>
+              <input formControlName="message" type="text" class="form-control" placeholder="Enter message" />
+            </div>
+            <div class="text-left" *ngFor="let error of errorMessages.message">
+              <ng-container *ngIf="form.message.hasError(error.type) && (form.message.dirty || form.message.touched)">
+                <small class="error-message">{{error.message}}</small>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <div class="my-3">
+          <label> Role<span class="text-danger">*</span></label>
+          <select class="custom-select text-capitalize" formControlName="role">
+            <option [value]="item.name" *ngFor="let item of roles">
+              {{item.label}}</option>
+          </select>
+
+          <div class="text-left" *ngFor="let error of errorMessages.role">
+            <ng-container *ngIf="form.role.hasError(error.type) && (form.role.dirty || form.role.touched)">
+              <small class="error-message">{{error.message}}</small>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+
+              <div class="col-md-9 pt-3" *ngIf="!url">
+                <div class="form-group satFat-logoBody">
+                  <label for="Advertise Image">Upload Image (Please upload image under 1mb and .jpg format)
+                  </label>
+                  <ngx-file-drop class="ngx-fileDropBody" dropZoneClassName="satFat-dropZoneBody imgBorderYes"
+                    contentClassName="satFat-contentBody" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
+                    (onFileLeave)="fileLeave($event)" accept="image/jpeg, image/png">
+                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                      <div class="align-self-center"></div>
+
+                      <div class="imgNone d-flex flex-column text-center">
+                        <div class="cloudIcon">
+                          <i class="fa fa-cloud-upload"></i>
+                        </div>
+                        Upload File (Drag & Drop)
+                        <div class="text-dark">OR</div>
+                        <button type="button" (click)="openFileSelector()">
+                          Browse File
+                        </button>
+                      </div>
+                    </ng-template>
+                  </ngx-file-drop>
+                </div>
+              </div>
+
+              <div class="col-md-3 text-center align-self-center" *ngIf="url">
+                <i (click)="removeUploadedImage()" class="delete-badge fa fa-trash shadow-sm"></i>
+                <img [src]="url" class="img-fluid img-size" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+      <div class="mb-2 text-center">
+        <button type="button" class="btn btn-success" (click)="onSubmit()">
+          Save
+        </button>
+        <button type="button" class="btn btn-outline-danger mx-2" (click)="goBack()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

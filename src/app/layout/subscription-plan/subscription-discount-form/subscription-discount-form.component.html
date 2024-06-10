@@ -1,0 +1,81 @@
+<div class="container-fluid animated fadeIn">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-auto">
+                    <h3 class="mb-0">Discount Form</h3>
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-danger" (click)="goBack()">
+                        <i class="fa fa-arrow-left me-1" aria-hidden="true"></i>
+                        Back
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            <form [formGroup]="discountForm" class="form-horizontal">
+                <div class="col">
+                    <div class="form-group">
+                        <label>Sub Category Type <span>*</span></label>
+                        <ng-select class="custom text-capitalize" [items]="subcategoryType"
+                            formControlName="subCategoryType"> </ng-select>
+                        <div class="text-left" *ngFor="let error of errorMessages.subCategoryType">
+                            <ng-container *ngIf="
+                        form.subCategoryType.hasError(error.type) &&
+                        (form.subCategoryType.dirty || form.subCategoryType.touched)
+                      ">
+                                <small class="error-message">{{ error.message }}</small>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label>Plan Type <span>*</span></label>
+                        <ng-select class="custom text-capitalize" [items]="planType" formControlName="planType">
+                        </ng-select>
+                        <div class="text-left" *ngFor="let error of errorMessages.planType">
+                            <ng-container
+                                *ngIf="form.planType.hasError(error.type) && (form.planType.dirty || form.planType.touched)">
+                                <small class="error-message">{{error.message}}</small>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label>Discount</label>
+                        <span class="text-danger">*</span>
+                        <div class="input-group input-group-alternative">
+                            <input type="number" class="form-control" formControlName="discount"
+                                placeholder="Enter discount" />
+                        </div>
+                        <div class="text-left" *ngFor="let error of errorMessages.discount">
+                            <ng-container
+                                *ngIf="form.discount.hasError(error.type) && (form.discount.dirty || form.discount.touched)">
+                                <small class="error-message">{{error.message}}</small>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="mb-2 text-center">
+                <button type="button" class="btn btn-success" *ngIf="!this.discountForm.value.id" (click)="create()">
+                    Save
+                </button>
+                <button type="button" class="btn btn-success" *ngIf="this.discountForm.value.id" (click)="update()">
+                    Update
+                </button>
+                <button type="button" class="btn btn-outline-danger mx-2" (click)="goBack()">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

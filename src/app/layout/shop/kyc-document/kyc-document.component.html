@@ -1,0 +1,180 @@
+<div class="container-fluid animated fadeIn">
+    <div class="card">
+        <div class="card-header">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-6">
+                    <h3 class="mb-0">Business KYC-Documents</h3>
+                </div>
+                <div class="col-6">
+                    <div class="text-right kyc-font">
+                        <b >KYC Verified :</b>
+                        <input type="checkbox" [(ngModel)]="isKYCDone" (change)="checkValue($event)" />
+                       <b>{{isKYCDone?"Yes":"No"}}</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <form [formGroup]="kycForm" class="form-horizontal">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-9 pt-3" *ngIf="!kycForm.controls.aadharCard.value">
+                                <div class="form-group satFat-logoBody">
+                                    <label for="Logo">Aadhar Card
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <ngx-file-drop class="ngx-fileDropBody"
+                                        dropZoneClassName="satFat-dropZoneBody imgBorderYes"
+                                        contentClassName="satFat-contentBody"
+                                        (onFileDrop)="dropped($event, 'aadharCard')" (onFileOver)="fileOver($event)"
+                                        (onFileLeave)="fileLeave($event)" accept="image/jpeg, image/png, .pdf">
+                                        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                                            <div class="align-self-center"></div>
+                                            <div class="imgNone d-flex flex-column text-center">
+                                                <div class="cloudIcon">
+                                                    <i class="fa fa-cloud-upload"></i>
+                                                </div>
+                                                Upload File (Drag & Drop)
+                                                <div class="text-dark">OR</div>
+                                                <button type="button" (click)="openFileSelector()">
+                                                    Browse File
+                                                </button>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-file-drop>
+                                </div>
+                                <div class="text-left" *ngFor="let error of errorMessages.aadharCard">
+                                    <ng-container *ngIf="
+                        form.aadharCard.hasError(error.type) &&
+                        (form.aadharCard.dirty || form.aadharCard.touched)
+                      ">
+                                        <small class="error-message">{{ error.message }}</small>
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 mt-2 text-center align-self-center"
+                                *ngIf="filePreview?.aadharCard && !filePreview?.aadharCard.includes('.pdf')">
+                                <i class=" delete-badge fa fa-download" style="font-size: 20px; margin-left: 37px;"
+                                    aria-hidden="true" (click)="downloadDoc(filePreview?.aadharCard)"></i>
+                                <i (click)="removeUploadedImage('aadharCard')"
+                                    class="delete-badge fa fa-trash shadow-sm"></i>
+                                <img [src]="filePreview?.aadharCard" class="img-fluid img-size" />
+                            </div>
+                            <div *ngIf="filePreview?.aadharCard && filePreview?.aadharCard.includes('.pdf')" class="
+                                col-md-3 mt-2 text-center align-self-center item-center ">
+                                <i class="fa fa-download" style="font-size: 40px;" aria-hidden="true"
+                                    (click)="downloadDoc(filePreview?.aadharCard)"></i>
+                                <label for="Logo">Download Aadhar Card</label>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-9 pt-3" *ngIf="!kycForm.controls.shopAct.value">
+                                <div class="form-group satFat-logoBody">
+                                    <label for="Banner Images">Business Act (Upload any one document)</label>
+                                    <ngx-file-drop class="ngx-fileDropBody"
+                                        dropZoneClassName="satFat-dropZoneBody imgBorderYes"
+                                        contentClassName="satFat-contentBody" (onFileDrop)="dropped($event, 'shopAct')"
+                                        (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)"
+                                        accept="image/jpeg, image/png,.pdf">
+                                        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                                            <div class="align-self-center"></div>
+                                            <div class="imgNone d-flex flex-column text-center">
+                                                <div class="cloudIcon">
+                                                    <i class="fa fa-cloud-upload"></i>
+                                                </div>
+                                                Upload File (Drag & Drop)
+                                                <div class="text-dark">OR</div>
+                                                <button type="button" (click)="openFileSelector()">
+                                                    Browse File
+                                                </button>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-file-drop>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mt-2 text-center align-self-center"
+                                *ngIf="filePreview?.shopAct && !filePreview?.shopAct.includes('.pdf')">
+                                <i class=" delete-badge fa fa-download" style="font-size: 20px; margin-left: 37px;"
+                                    aria-hidden="true" (click)="downloadDoc(filePreview?.shopAct)"></i>
+                                <i (click)="removeUploadedImage('shopAct')"
+                                    class="delete-badge fa fa-trash shadow-sm"></i>
+                                <img [src]="filePreview?.shopAct" class="img-fluid img-size" />
+                            </div>
+                            <div *ngIf="filePreview?.shopAct && filePreview?.shopAct.includes('.pdf')"
+                                class="col-md-3 mt-2 text-center align-self-center item-center">
+                                <i class="fa fa-download" style="font-size: 40px;" aria-hidden="true"
+                                    (click)="downloadDoc(filePreview?.shopAct)"></i>
+                                <label for="Logo">Download shop Act</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-9 pt-3" *ngIf="!kycForm.controls.incorporationCertificate.value">
+                                <div class="form-group satFat-logoBody">
+                                    <label for="Banner Images">Incorporation Certificate</label>
+                                    <ngx-file-drop class="ngx-fileDropBody"
+                                        dropZoneClassName="satFat-dropZoneBody imgBorderYes"
+                                        contentClassName="satFat-contentBody"
+                                        (onFileDrop)="dropped($event, 'incorporationCertificate')"
+                                        (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)"
+                                        accept="image/jpeg, image/png,.pdf">
+                                        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                                            <div class="align-self-center"></div>
+                                            <div class="imgNone d-flex flex-column text-center">
+                                                <div class="cloudIcon">
+                                                    <i class="fa fa-cloud-upload"></i>
+                                                </div>
+                                                Upload File (Drag & Drop)
+                                                <div class="text-dark">OR</div>
+                                                <button type="button" (click)="openFileSelector()">
+                                                    Browse File
+                                                </button>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-file-drop>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mt-2 text-center align-self-center"
+                                *ngIf="filePreview?.incorporationCertificate && !filePreview?.incorporationCertificate.includes('.pdf')">
+                                <i class=" delete-badge fa fa-download" style="font-size: 20px; margin-left: 37px;"
+                                    aria-hidden="true" (click)="downloadDoc(filePreview?.incorporationCertificate)"></i>
+                                <i (click)="removeUploadedImage('incorporationCertificate')"
+                                    class="delete-badge fa fa-trash shadow-sm"></i>
+                                <img [src]="filePreview?.incorporationCertificate" class="img-fluid img-size" />
+                            </div>
+                            <div *ngIf="filePreview?.incorporationCertificate && filePreview?.incorporationCertificate.includes('.pdf')"
+                                class="col-md-3 mt-2 text-center align-self-center item-center">
+                                <i class="fa fa-download" style="font-size: 40px;" aria-hidden="true"
+                                    (click)="downloadDoc(filePreview?.incorporationCertificate)"></i>
+                                <label for="Logo">Download incorporation Certificate</label>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="text-center">
+                <button type="button" class="btn btn-success" (click)="update()"
+                    [disabled]="!filePreview.aadharCard || (!filePreview.shopAct && !filePreview.incorporationCertificate)">
+                    Submit
+                </button>
+                <button (click)="goBack()" class="btn btn-outline-danger mx-2">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,130 @@
+.form-check-input,.form-check-label{
+    cursor: pointer;
+}
+
+.radius-0{
+    border-radius: 0;
+}
+.btn-add{
+    background: #f79521;
+    border:none;
+    color: #fff;
+}
+.btn-add:hover{
+    background: #ca7003;
+}
+ ::ng-deep .satFat-dropZoneBody {
+    position: relative;
+    /*min-width: 150px; 250 300
+  max-width: 200px;   150 200 */
+    min-width: 110px;
+    min-height: 130px;
+    max-height: 100px;
+    border-radius: 8px;
+    border: 2px dashed rgba(8, 138, 254, 0);
+    padding: 6px;
+    box-sizing: content-box;
+    transition: all 0.25s;
+}
+::ng-deep .imgBorderYes {
+    background-color: white;
+  border: 2px dashed rgb(18 17 17);
+}
+::ng-deep .imgBorderNone {
+    background-color: rgba(8, 138, 254, 0);
+    border: 2px dashed rgba(136, 151, 163, 0);
+}
+.ngx-fileDropBody:hover ::ng-deep .imgBorderNone {
+    background-color: rgba(8, 138, 254, 0.085);
+    border: 2px dashed rgba(8, 138, 254, 0.3);
+}
+::ng-deep .satFat-dropZoneBody.ngx-file-drop__drop-zone--over {
+    background-color: rgba(8, 138, 254, 0.35) !important;
+}
+::ng-deep .satFat-contentBody {
+    display: flex;
+    min-height: 130px;
+    max-height: 100px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    padding: 6px;
+    background-color: #e4e5e6;
+    border-radius: 5px;
+}
+.satFat-logoBody img {
+    max-width: inherit;
+    max-height: inherit;
+}
+.satFat-logoBody .imgNone {
+    position: absolute;
+      font-weight: bold;
+}
+.satFat-logoBody .imgNone .cloudIcon {
+    font-size: 35px;
+    opacity: 0.5;
+  
+}
+.satFat-logoBody .imgNone button {
+    font-size: 14px !important;
+    background-color: #f79521;
+    color: #fff;
+    border: none !important;
+    box-shadow: none;
+    outline: none !important;
+    line-height: 1;
+    padding: 6px 7px;
+    border-radius: 20px;
+    margin: 10px auto;
+       width: 150px;
+    height: 30px;
+  margin-bottom: 14px;
+    
+}
+.satFat-logoBody .imgYes {
+    display: none;
+    justify-content: center;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 8px;
+}
+.ngx-fileDropBody:hover .imgYes {
+    display: flex;
+}
+.satFat-logoBody .imgYes .yukleBtn {
+    background-color: rgba(8, 138, 254, 0.85);
+    border: none !important;
+    box-shadow: none;
+    outline: none !important;
+    border-radius: 3px;
+    line-height: 1;
+    padding: 6px;
+    cursor: pointer;
+    color: #fff !important;
+    font-size: 13px;
+}
+.satFat-logoBody .imgYes .silBtn {
+    background-color: rgba(8, 138, 254, 0.85);
+    border: none !important;
+    box-shadow: none;
+    outline: none !important;
+    border-radius: 3px;
+    line-height: 1;
+    padding: 6px;
+    cursor: pointer;
+    color: #fff !important;
+    font-size: 13px;
+}
+.satFat-logoBody .imgYes .yukleBtn:hover,
+.satFat-logoBody .imgYes .silBtn:hover {
+    background-color: rgba(8, 138, 254, 1);
+}
+
+
+.img-size {
+    height: 150px;
+    width: 182px;
+    margin-top: 34px;
+  }

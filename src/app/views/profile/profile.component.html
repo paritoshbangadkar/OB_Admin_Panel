@@ -1,0 +1,62 @@
+<div class="container-fluid animated fadeIn" style="padding: 20px; padding-top: 0px">
+    <div class="card" *ngIf="userDetails.role === 'SUPER_ADMIN' || userDetails.role === 'ADMIN'">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6 align-self-center">
+                    <h4 class="mb-0">User Details</h4>
+                </div>
+                <div class="col-md-6 text-right">
+                    <div class="text-right">
+                            <button type="button" class="btn btn-secondary" (click)="goBack()">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+                            </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5 mx-auto">
+                    <div class="card mb-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <img src="assets/img/placeholder.jpg"  width="100" class="rounded-circle img-thumbnail" alt="profile-image">
+                                <img *ngIf="userDetails.profilePicture" src={{userDetails.profilePicture}}  width="100" class="rounded-circle img-thumbnail" alt="profile-image">
+                            </div>
+                            <div class="text-center my-3">
+                                <h5>
+                                    <span>Role :</span>
+                                    <span class="font-weight-bold"> {{ userDetails.role }}</span>
+                                </h5>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <h6 class="font-weight-bold">First Name</h6>
+                                    <h6>{{ userDetails.firstName }}</h6>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <h6 class="font-weight-bold">Last Name</h6>
+                                    <h6>{{ userDetails.lastName }}</h6>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <h6 class="font-weight-bold">Email Id</h6>
+                                    <h6>{{ userDetails.email }}</h6>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <h6 class="font-weight-bold">Mobile </h6>
+                                    <h6>{{ userDetails.mobileNumber }}</h6>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

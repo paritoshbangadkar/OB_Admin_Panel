@@ -1,0 +1,111 @@
+<div class="card-body">
+    <div class="">
+        <h3 class="mb-2">Guest Business</h3>
+    </div>
+    <div class="row mb-2">
+        <div class="col-md-5">
+            <form class="d-flex">
+                <input class="form-control" type="text" placeholder="Search" aria-label="Search" [(ngModel)]="search"
+                    [ngModelOptions]="{ standalone: true }" (keyup)="getAll()" />
+                <div class="col-auto">
+                    <button type="button" type="submit" (click)="refreshList('clear')" class="btn btn-outline-danger">
+                        <i class="fa fa-filter" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="col-auto ml-2 mx-2">
+            <button type="button" type="submit" (click)="deleteShop()" class="btn btn-outline-danger">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="col-3 d-flex ml-2">
+            <input type="checkbox" class="checkbox-css" ame="selectAll" [checked]="selectAll"
+                (change)="selectUnselectAll($event)">
+            <label style="margin-left: 8px;" for="selectAll" class="mt-2"> Select All</label>
+        </div>
+    </div>
+    <div class="table-responsive text-nowrap">
+        <table class="table table-striped table-hover table-sticky">
+            <thead class="table-primary">
+                <tr>
+                    <th>Sr.No</th>
+                    <th>Select</th>
+                    <th>Mobile No.</th>
+                    <th>Role</th>
+                    <th>Created At</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let u of guestShop; let i = index">
+                    <td>{{ pageSize * (page - 1) + (i + 1) }}</td>
+                    <td>
+                        <div class="checkbox-container">
+                            <div>
+                                <input type="checkbox" name="myCheckbox" [checked]="u.isSelected"
+                                    (change)="singleChange($event, u.id)">
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{ u.mobileNumber }}</td>
+                    <td>{{ u.role }}</td>
+                    <td>{{ u.createdAt | date:"dd/MM/yyyy hh:mm a" }}</td>
+                    <td>{{ u?.status ?'Guest': '' | titlecase }}</td>
+                    <td>
+                        <div class="col">
+                            <div ngbDropdown container="body">
+                                <button ngbDropdownToggle id="dropdownBasic1"
+                                    class="btn btn-icon btn-2 btn-sm btn-neutral text-default" type="button">
+                                    <span class="btn-inner--icon"><i class="fa fa-ellipsis-v text-danger"
+                                            aria-hidden="true"></i></span>
+                                </button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                    <button ngbDropdownItem class="btn btn-sm btn-outline-danger"
+                                        (click)="open(u, alertMsg)"><i
+                                            class="fa fa-trash text-danger"></i>Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <app-custom-pagination [(page)]="page" [(pageSize)]="pageSize" [(collection)]="collection"
+        (myOutput)="onChangePage(page)"></app-custom-pagination>
+</div>
+
+<ng-template #alertMsg let-modal>
+    <div class="row mt-3 me-3">
+        <div class="col-md-10 col-sm-10"></div>
+        <div class="col-md-2 col-sm-2 text-right">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body text-center px-0">
+        <h5 class="text-warning">
+            <img src="../../../../assets/img/warning.png" class="mr-3 delete-icon" alt="" />
+            Are you sure you want to Delete ?
+        </h5>
+        <div class="clearfix modal-text">
+            <label *ngIf="selectedRow.shopName">
+                <h5>{{ selectedRow.shopName }}</h5>
+            </label>
+        </div>
+    </div>
+    <div class="model-footer border-0 text-center px-0 pb-4">
+        <div class="clearfix py-2">
+            <button class="btn btn-danger me-2" (click)="delete(this.selectedRow._id)">
+                OK
+            </button>
+            <button class="btn btn-success" (click)="modal.dismiss('Cross click')">
+                Cancel
+            </button>
+        </div>
+    </div>
+</ng-template>

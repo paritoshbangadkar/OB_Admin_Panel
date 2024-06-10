@@ -1,0 +1,117 @@
+<div class="container-fluid animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-auto">
+          <h3 class="mb-0">Users</h3>
+        </div>
+        <div class="col-auto" *ngIf="ROLES.SUPER_ADMIN">
+          <button type="button" (click)="view(null)" class="btn btn-outline-primary">
+            <i class="fa fa-plus-circle me-1"></i>
+            User
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row mb-2">
+        <div class="col-md-5">
+          <form class="d-flex">
+            <input class="form-control" type="text" placeholder="Search" aria-label="Search" [(ngModel)]="search"
+              [ngModelOptions]="{ standalone: true }" (keyup)="refreshList('search')" />
+            <div class="col-auto">
+              <button type="button" type="submit" (click)="refreshList('clear')" class="btn btn-outline-danger">
+                <i class="fa fa-filter" aria-hidden="true"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="table-responsive text-nowrap">
+        <table class="table table-striped table-hover table-bordered table-sticky">
+          <thead class="table-primary">
+            <tr>
+              <th>Sr.No</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Mobile No.</th>
+              <th>Role</th>
+              <th>
+                <span *ngIf="ROLES.SUPER_ADMIN"></span>
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let u of users; let i = index">
+              <td>{{ pageSize * (page - 1) + (i + 1) }}</td>
+              <td>{{ u.firstName }} {{ u.lastName }}</td>
+              <td>
+                <span class="action-span" placement="left" ngbTooltip="{{ u.email }}">
+                  {{ u.email }}
+                </span>
+              </td>
+              <td>{{ u.mobileNumber }}</td>
+              <td>{{ u?.role }}</td>
+              <td>
+
+                <div class="col" *ngIf="ROLES.SUPER_ADMIN">
+                  <div ngbDropdown container="body">
+                    <button ngbDropdownToggle id="dropdownBasic1"
+                      class="btn btn-icon btn-2 btn-sm btn-neutral text-default" type="button">
+                      <span class="btn-inner--icon"><i class="fa fa-ellipsis-v text-danger"
+                          aria-hidden="true"></i></span>
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                      <button ngbDropdownItem class="btn btn-sm btn-outline-warning me-1" (click)="view(u._id)">
+                        <i class="fa fa-pencil-square text-danger" aria-hidden="true"></i>Edit
+                      </button>
+
+                      <button ngbDropdownItem class="btn btn-sm btn-outline-danger" (click)="open(u, alertMsg)">
+                        <i class="fa fa-trash text-danger"></i>Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <app-custom-pagination [(page)]="page" [(pageSize)]="pageSize" [(collection)]="collection"
+        (myOutput)="onChangePage(page)"></app-custom-pagination>
+    </div>
+  </div>
+</div>
+<ng-template #alertMsg let-modal>
+  <div class="row mt-3 me-3">
+    <div class="col-md-10 col-sm-10"></div>
+    <div class="col-md-2 col-sm-2 text-right">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+        (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="modal-body text-center px-0">
+    <img src="../../../../assets/img/warning.png" class="mb-3" width="100" alt="" />
+    <h4 class="text-warning">Are you sure you want to Delete ?</h4>
+    <div class="clearfix modal-text">
+      <label *ngIf="selectedRow.userName">
+        <h3>{{ selectedRow.userName }}</h3>
+      </label>
+    </div>
+  </div>
+  <div class="model-footer border-0 text-center px-0 pb-4">
+    <div class="clearfix py-2">
+      <button class="btn btn-danger me-2" (click)="deleteUser(this.selectedRow._id)">
+        OK
+      </button>
+      <button class="btn btn-success" (click)="modal.dismiss('Cross click')">
+        Cancel
+      </button>
+    </div>
+  </div>
+</ng-template>

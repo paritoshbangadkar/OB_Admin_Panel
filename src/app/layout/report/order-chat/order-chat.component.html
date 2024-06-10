@@ -1,0 +1,178 @@
+<div>
+  <div class="card-header border-0 px-3 py-3">
+    <div class="row">
+      <div class="col-8">
+        <h4 class="text-default">Order number : {{ orderNumber }}</h4>
+      </div>
+      <div class="col-4 text-right">
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-danger"
+          aria-label="Close"
+          (click)="dismissModal()"
+        >
+          <span class="btn-inner--icon">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+  class="chat-container table-responsive"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="500"
+  (scrolled)="onScroll()"
+  [scrollWindow]="false"
+>
+
+
+  <div class="chat-messages" *ngFor="let item of messageData; let i = index">
+    <ng-container
+      *ngIf="
+        item.senderDetails.role == ROLES.SHOP ||
+        item.senderDetails.role == ROLES.EMPLOYEE
+      "
+    >
+      <div class="message" *ngIf="item.message">
+        <!-- <span class="sender">John</span> -->
+        <div
+          class="message-text"
+          style="background-color: #0090d0; color: white"
+        >
+          <!-- {{ item.message }} -->
+          <span [innerHTML]="item?.message"></span>
+          <a
+            role="button"
+            (click)="openGoogleMap(item?.location)"
+            *ngIf="item?.category === messageCategory.LOCATION"
+          >
+            <h6 class="text-danger">Open Map</h6>
+          </a>
+        </div>
+        <small>{{ item.createdAt | date : "dd/MM/yyyy hh:mm a" }}</small>
+      </div>
+
+      <ng-container *ngIf="imageExtension.includes(item?.chatMedia?.fileType)">
+        <div class="message">
+          <!-- <span class="sender">John</span> -->
+          <div class="message-text">
+            <img src="{{ item?.chatMedia?.filePath }}" />
+          </div>
+          <i
+            class="fa fa-download mx-1"
+            aria-hidden="true"
+            (click)="downloadDoc(item?.chatMedia?.filePath)"
+          ></i>
+          <small>{{ item.createdAt | date : "dd/MM/yyyy hh:mm a" }}</small>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="videoExtension.includes(item?.chatMedia?.fileType)">
+        <div class="message">
+          <!-- <span class="sender">John</span> -->
+          <div class="message-text">
+            <video type="video/mp4" class="video-size" controls>
+              <source
+                class="avatar"
+                src="{{ item?.chatMedia?.filePath }}"
+                type="video/mp4"
+              />
+            </video>
+          </div>
+          <small>{{ item.createdAt | date : "dd/MM/yyyy hh:mm a" }}</small>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="fileExtension.includes(item?.chatMedia?.fileType)">
+        <div class="message">
+          <!-- <span class="sender">John</span> -->
+          <div class="message-text">
+            <img src="{{ item?.chatMedia?.filePath }}" />
+          </div>
+          <i
+            class="fa fa-download mx-1"
+            aria-hidden="true"
+            (click)="downloadDoc(item?.chatMedia?.filePath)"
+          ></i>
+          <small>{{ item.createdAt | date : "dd/MM/yyyy hh:mm a" }}</small>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <!-- CUSTOMER -->
+    <ng-container *ngIf="item.senderDetails.role == ROLES.CUSTOMER">
+      <div class="message right-msg" *ngIf="item.message">
+        <!-- <span class="sender">{{ item.senderDetails.firstName }}</span> -->
+        <div
+          class="message-text"
+          style="background-color: #de0f3f; color: white"
+        >
+          <!-- {{ item.message }} -->
+          <span [innerHTML]="item?.message"></span>
+          <a
+            role="button"
+            (click)="openGoogleMap(item?.location)"
+            *ngIf="item?.category === messageCategory.LOCATION"
+          >
+            <h6 class="open-map-text">Open Map</h6>
+          </a>
+        </div>
+        <small>{{ item.createdAt | date : "dd/MM/yyyy hh:mm a" }}</small>
+      </div>
+
+      <ng-container *ngIf="imageExtension.includes(item?.chatMedia?.fileType)">
+        <div class="message right-msg">
+          <!-- <span class="sender">{{ item.senderDetails.firstName }}</span> -->
+          <div class="message-text whatsapp-message">
+            <img src="{{ item?.chatMedia?.filePath }}" />
+          </div>
+          <i
+            class="fa fa-download mx-1"
+            aria-hidden="true"
+            (click)="downloadDoc(item?.chatMedia?.filePath)"
+          ></i>
+          <small>{{ item.createdAt | date : "dd/MM/yyyy hh:mma" }}</small>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="videoExtension.includes(item?.chatMedia?.fileType)">
+        <div class="message right-msg">
+          <!-- <span class="sender">{{ item.senderDetails.firstName }}</span> -->
+          <div class="message-text whatsapp-message">
+            <video type="video/mp4" class="video-size" controls>
+              <source
+                class="avatar"
+                src="{{ item?.chatMedia?.filePath }}"
+                type="video/mp4"
+              />
+            </video>
+          </div>
+          <small>{{ item.createdAt | date : "dd/MM/yyyy hh:mma" }}</small>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="fileExtension.includes(item?.chatMedia?.fileType)">
+        <div class="message right-msg">
+          <!-- <span class="sender">{{ item.senderDetails.firstName }}</span> -->
+          <div class="message-text whatsapp-message">
+            <img src="{{ item?.chatMedia?.filePath }}" />
+          </div>
+          <i
+            class="fa fa-download mx-1"
+            aria-hidden="true"
+            (click)="downloadDoc(item?.chatMedia?.filePath)"
+          ></i>
+          <small>{{ item.createdAt | date : "dd/MM/yyyy hh:mma" }}</small>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+</div>
+
+
+
+

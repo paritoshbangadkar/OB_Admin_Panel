@@ -1,0 +1,268 @@
+<div class="container-fluid animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-auto">
+          <h3 class="mb-0">Customer Form</h3>
+        </div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-danger" (click)="goBack()">
+            <i class="fa fa-arrow-left me-1" aria-hidden="true"></i>
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="customerForm" class="form-horizontal">
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>First Name</label>
+              <span class="text-danger">*</span>
+              <div class="input-group input-group-alternative">
+                <input type="text" class="form-control" formControlName="firstName" placeholder="Enter first name" />
+              </div>
+              <div class="text-left" *ngFor="let error of errorMessages.firstName">
+                <ng-container
+                  *ngIf="form.firstName.hasError(error.type) && (form.firstName.dirty || form.firstName.touched)">
+                  <small class="error-message">{{error.message}}</small>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Last Name</label>
+              <span class="text-danger">*</span>
+              <div class="input-group input-group-alternative">
+                <input type="text" class="form-control" formControlName="lastName" placeholder="Enter last name" />
+              </div>
+              <div class="text-left" *ngFor="let error of errorMessages.lastName">
+                <ng-container
+                  *ngIf="form.lastName.hasError(error.type) && (form.lastName.dirty || form.lastName.touched)">
+                  <small class="error-message">{{error.message}}</small>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Email</label>
+              <!-- <span class="text-danger">*</span> -->
+              <div class="input-group input-group-alternative">
+                <input type="text" class="form-control" formControlName="email" placeholder="Enter email" />
+              </div>
+              <div class="text-left" *ngFor="let error of errorMessages.email">
+                <ng-container *ngIf="form.email.hasError(error.type) && (form.email.dirty || form.email.touched)">
+                  <small class="error-message">{{error.message}}</small>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Mobile Number</label>
+              <span class="text-danger">*</span>
+              <div class="input-group input-group-alternative">
+                <input type="text" class="form-control" formControlName="mobileNumber"
+                  placeholder="Enter mobileNumber" />
+              </div>
+              <div class="text-left" *ngFor="let error of errorMessages.mobileNumber">
+                <ng-container
+                  *ngIf="form.mobileNumber.hasError(error.type) && (form.mobileNumber.dirty || form.mobileNumber.touched)">
+                  <small class="error-message">{{error.message}}</small>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Select Gender</label>
+              <div>
+                <ng-select interface="popover" formControlName="gender" placeholder="Select Gender">
+                  <ng-option [value]="'male'">Male</ng-option>
+                  <ng-option [value]="'female'">Female</ng-option>
+                  <ng-option [value]="'other'">Other</ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- address -->
+
+        <!-- <div class="card">
+          <div class="card-header">
+            Address
+            <div class="card-body">
+              <div formGroupName="address">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div>
+                      <label class="form-label">
+                        Street
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input formControlName="line1" type="text" id="line1" name="line1" class="form-control"
+                        placeholder="Enter Address" />
+                    </div>
+                    <div class="text-left">
+                      <ng-container
+                        *ngIf="form['address'].get('line1').invalid  && (form['address'].get('line1').dirty || form['address'].get('line1').touched)">
+                        <small class="error-message">Please enter address</small>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div>
+                      <label class="form-label">
+                        City
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input formControlName="city" type="tel" id="city" class="form-control"
+                        placeholder="Enter City" />
+                    </div>
+                    <div class="text-left">
+                      <ng-container
+                        *ngIf="form['address'].get('city').invalid  && (form['address'].get('city').dirty || form['address'].get('city') .touched)">
+                        <small class="error-message">Please enter city</small>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div>
+                      <label class="form-label">
+                        State
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input formControlName="state" type="text" id="state" name="state" class="form-control"
+                        placeholder="Enter State" />
+                    </div>
+                    <div class="text-left">
+                      <ng-container
+                        *ngIf="form['address'].get('state').invalid  && (form['address'].get('state').dirty || form['address'].get('state') .touched)">
+                        <small class="error-message">Please enter state</small>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div>
+                      <label class="form-label">
+                        Country
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input formControlName="country" type="tel" id="country" class="form-control"
+                        placeholder="Enter Country " />
+                    </div>
+                    <div class="text-left">
+                      <ng-container
+                        *ngIf="form['address'].get('country').invalid  && (form['address'].get('country').dirty || form['address'].get('country') .touched)">
+                        <small class="error-message">Please enter country</small>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div>
+                      <label class="form-label">
+                        Pin Code
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input formControlName="pinCode" type="text" id="pinCode" name="pinCode" class="form-control"
+                        minlength="6" maxlength="6" placeholder="Enter Pin Code" />
+                    </div>
+                    <div class="text-left">
+                      <ng-container
+                        *ngIf="form['address'].get('pinCode').invalid   && (form['address'].get('pinCode').dirty || form['address'].get('pinCode') .touched)">
+                        <small class="error-message">Please enter pincode</small>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+        <div class="d-flex">
+          <label class="mt-0">
+            See User Address
+            <a type="button" class="ml-3 text-capitalize" (click)="openAddress()">
+              <u>Click Here</u>
+            </a>
+          </label>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-9 pt-3" *ngIf="!form.profilePicture.value">
+                <div class="form-group satFat-logoBody">
+                  <label for="Profile Picture">Profile Picture</label>
+                  <ngx-file-drop class="ngx-fileDropBody" dropZoneClassName="satFat-dropZoneBody imgBorderYes"
+                    contentClassName="satFat-contentBody" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
+                    (onFileLeave)="fileLeave($event)" accept="image/jpeg, image/png">
+                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                      <div class="align-self-center"></div>
+                      <div class="imgNone d-flex flex-column text-center">
+                        <div class="cloudIcon">
+                          <i class="fa fa-cloud-upload"></i>
+                        </div>
+                        Upload File (Drag & Drop)
+                        <div class="text-dark">OR</div>
+                        <button type="button" (click)="openFileSelector()">
+                          Browse File
+                        </button>
+                      </div>
+                    </ng-template>
+                  </ngx-file-drop>
+                </div>
+                <div class="text-left" *ngFor="let error of errorMessages.profilePicture">
+                  <ng-container
+                    *ngIf="form.profilePicture.hasError(error.type) && (form.profilePicture.dirty || form.profilePicture.touched)">
+                    <small class="error-message">{{error.message}}</small>
+                  </ng-container>
+                </div>
+              </div>
+
+              <div class="col-md-3 text-center align-self-center" *ngIf="form.profilePicture.value;">
+                <i (click)="removeUploadedImage()" class="delete-badge fa fa-trash shadow-sm"></i>
+                <img [src]="form.profilePicture.value" class="img-fluid img-size" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="d-flex">
+        <label class="mt-0">
+          See Registration Info
+          <a type="button" class="ml-3 text-capitalize" (click)="deviceInfo()">
+            <u>Click Here</u>
+          </a>
+        </label>
+      </div>
+      <div class="text-center">
+        <button type="button" class="btn btn-success" *ngIf="!this.customerForm.value.id" (click)="create()">
+          Save
+        </button>
+        <button type="button" class="btn btn-success" *ngIf="this.customerForm.value.id" (click)="update()">
+          Update
+        </button>
+        <button (click)="goBack()" class="btn btn-outline-danger mx-2">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

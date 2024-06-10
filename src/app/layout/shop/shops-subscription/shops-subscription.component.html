@@ -1,0 +1,167 @@
+<div class="container-fluid">
+  <div class="card-header border-0">
+    <h5 class="text-uppercase card-title text-default mb-0">
+      Current Subscription
+    </h5>
+  </div>
+  <div class="card-body py-0 mt-3">
+    <div class="row">
+      <div class="col-5">
+        <div class="card border-color-1">
+          <div class="card-body">
+            <ng-container *ngIf="currentPlan?.planId">
+              <div class="d-flex justify-content-between">
+                <h4 class="text-color-2">
+                  <span class="badge badge-danger">{{removedUnderScore(currentPlan?.planId?.planType) | titlecase}}
+                  </span>
+                </h4>
+                <h2>
+                  <i class="fa fa-inr" aria-hidden="true"></i>
+                  {{ currentPlan?.amount }}
+                </h2>
+              </div>
+              <div class="clearfix" *ngIf="currentPlan?.startDate && currentPlan?.endDate">
+                <span>{{ currentPlan?.startDate | date }} - {{ currentPlan?.endDate | date }}</span>
+              </div>
+              <div class="clearfix" *ngIf="currentPlan?.validTill">
+                <span>{{ currentPlan?.validTill | date }} </span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between mt-2">
+                <div class="clearfix">
+                  <span class="badge badge-pill badge-success">{{
+                    currentPlan?.state == "COMPLETED"
+                    ? "Paid"
+                    : currentPlan?.state
+                    }}</span>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!currentPlan?.planId">
+              <h5>No Plan</h5>
+              <button type="button" (click)="openSubscription()" class="btn btn-success text-center btn-icon">
+                <span class="btn-inner--text text-capitalize">Upgrade</span>
+                <span class="btn-inner--icon">
+                  <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                </span>
+              </button>
+            </ng-container>
+            <ng-container *ngIf="currentPlan?.status==defaultStatus.EXPIRED || !currentPlan ">
+              <h5>No Plan</h5>
+              <button type="button" (click)="openSubscription()" class="btn btn-success text-center btn-icon">
+                <span class="btn-inner--text text-capitalize">Upgrade</span>
+                <span class="btn-inner--icon">
+                  <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                </span>
+              </button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav ngbNav #nav="ngbNav" class="nav-tabs">
+      <ng-container ngbNavItem>
+        <a ngbNavLink>Yearly</a>
+        <ng-template ngbNavContent>
+          <div class="card-body" *ngIf="dataList?.length > 0; else noData">
+            <div class="table-responsive text-nowrap">
+              <table class="table table-striped table-hover table-bordered table-sticky">
+                <thead class="table-primary">
+                  <tr>
+                    <th>Sr.No</th>
+                    <th>Title</th>
+                    <th>Validity</th>
+                    <th>Amount</th>
+                    <th>Payment State</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of dataList; let i = index">
+                    <td>{{ pageSize * (page - 1) + (i + 1) }}</td>
+                    <td class="text-wrap">
+                      {{
+                      removedUnderScore(item?.userPurchasePlan?.planType)
+                      | titlecase
+                      }}
+                    </td>
+                    <td class="text-wrap">
+                      {{ item?.startDate | date : "shortDate" }} -
+                      {{ item?.endDate | date : "shortDate" }}
+                    </td>
+
+                    <td class="text-wrap">{{ item?.amount }}</td>
+                    <td class="text-wrap">
+                      {{ item?.state == "COMPLETED" ? "Paid" : item?.state }}
+                    </td>
+                    <td class="text-wrap">
+                      {{ item?.status | titlecase }}
+                    </td>
+
+                    <td class="text-wrap">{{ item?.createdAt | date : "short" }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <app-custom-pagination [(page)]="page" [(pageSize)]="pageSize" [(collection)]="collection"
+              (myOutput)="onChangePage(page)"></app-custom-pagination>
+          </div>
+
+          <ng-template #noData>
+            <div class="text-center mt-3">
+              <h4>No Subscription Plan</h4>
+            </div>
+          </ng-template>
+        </ng-template>
+      </ng-container>
+      <ng-container ngbNavItem>
+        <a ngbNavLink>Monthly</a>
+        <ng-template ngbNavContent>
+          <div class="card-body" *ngIf="recurringSubscriptionList?.length > 0; else noData">
+            <div class="table-responsive text-nowrap">
+              <table class="table table-striped table-hover table-bordered table-sticky">
+                <thead class="table-primary">
+                  <tr>
+                    <th>Sr.No</th>
+                    <th>Title</th>
+                    <th>Validity</th>
+                    <th>Amount</th>
+                    <th>Created At</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of recurringSubscriptionList; let i = index">
+                    <td>{{ pageSize * (page - 1) + (i + 1) }}</td>
+                    <td class="text-wrap">
+                      {{
+                      removedUnderScore(item?.userPurchasePlan?.planType)
+                      | titlecase
+                      }}
+                    </td>
+                    <td class="text-wrap">
+                      {{ item?.validTill| date }}
+                    </td>
+                    <td class="text-wrap">{{ item?.amount }}</td>
+                    <td class="text-wrap">{{ item?.createdAt | date : "short" }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <app-custom-pagination [(page)]="page" [(pageSize)]="pageSize" [(collection)]="collection"
+              (myOutput)="onChangePage(page)"></app-custom-pagination>
+          </div>
+
+          <ng-template #noData>
+            <div class="text-center mt-3">
+              <h4>No Subscription Plan</h4>
+            </div>
+          </ng-template>
+        </ng-template>
+      </ng-container>
+
+    </nav>
+
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+  </div>
+</div>

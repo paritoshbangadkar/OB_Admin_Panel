@@ -1,0 +1,49 @@
+<div class="container-fluid animated fadeIn">
+    <div class="card">
+        <div class="card-header mt-2">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-auto">
+                    <h3 class="mb-0">Group Info</h3>
+                </div>
+                <div class="col-auto">
+                    <i (click)="dismiss()" class="fa fa-times text-danger" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+        <div class="card-body text-center">
+            <div class="mb-4">
+                <img class="avatar" [src]="groupInfo?.profilePicture || 'assets/img/placeholder_profile.png'" />
+            </div>
+            <h4>{{ groupInfo?.groupName | titlecase }}</h4>
+            <h6>Group: {{ groupInfo?.customer?.length + groupInfo?.groupEmployee?.length }} Members</h6>
+
+            <!-- Display group employees -->
+            <div class="row justify-content-start mt-5">
+                <div class="row" *ngFor="let employee of groupInfo?.groupEmployee">
+                    <div class="col-2 mb-2">
+                        <img class="avatar-small"
+                            [src]="employee?.profilePicture ||'assets/img/placeholder_profile.png'">
+                    </div>
+                    <h6 class="col-6 align-self-center">{{ employee.firstName | titlecase }} {{ employee.lastName |
+                        titlecase }}</h6>
+                    <div class="col-4">
+                        <div *ngFor="let role of employee?.employeeInfo" class="badge badge-primary mr-2">{{
+                            role?.employeeRole }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Display group customers -->
+            <div class="row justify-content-start mt-3">
+                <div class="row" *ngFor="let customer of groupInfo?.customer">
+                    <div class="col-2 mb-2">
+                        <img class="avatar-small"
+                            [src]="customer?.profilePicture ||'assets/img/placeholder_profile.png'">
+                    </div>
+                    <h6 class="col-6 align-self-center">{{ customer?.firstName | titlecase }} {{ customer?.lastName |
+                        titlecase }}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

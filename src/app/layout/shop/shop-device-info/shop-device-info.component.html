@@ -1,0 +1,76 @@
+<div class="close-btn">
+    <button type="button" class="btn btn-icon btn-sm btn-neutral text-default close-icon mt-3" aria-label="Close"
+        (click)="closeModal()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+</div>
+<ng-container>
+    <div class="card profile-card border-0">
+        <div class="card-body">
+            <h3>Device Information</h3>
+            <div class="my-4">
+                <div class="d-flex justify-content-between receipt-items">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize"><strong>Device Id(Unique identifier)</strong></span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-capitalize">
+                            {{deviceData?.deviceId}}</span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between receipt-items">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize"><strong>Name</strong></span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-capitalize">
+                            {{deviceData?.deviceInfo?.name}}</span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between receipt-items">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize"><strong>Model</strong></span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-capitalize">
+                            {{deviceData?.deviceInfo?.model}}</span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between receipt-items">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize"><strong>Device Platform</strong></span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-capitalize">
+                            {{deviceData?.deviceInfo?.platform}}</span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between receipt-items">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize"><strong>Device Manufacturer</strong></span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-capitalize">
+                            {{deviceData?.deviceInfo?.manufacturer}}</span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between receipt-items">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize"><strong>Device Operating System Version</strong></span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-capitalize">
+                            {{deviceData?.deviceInfo?.osVersion}}</span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between receipt-items">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize"><strong>See Registration Location</strong></span>
+                        <span class="text-capitalize text-danger" (click)="seeLocation()"><u> Click Here</u></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

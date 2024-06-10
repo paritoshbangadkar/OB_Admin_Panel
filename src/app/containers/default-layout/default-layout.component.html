@@ -1,0 +1,74 @@
+<app-header [navbarBrandRouterLink]="['/dashboard']" [fixed]="true" [navbarBrandFull]="{
+    src: '../../../assets/BHARAT-ONLINE_logo.jpg',
+    width: 30,
+    height: 30,
+    class: 'nav-logo mr-2',
+    alt: 'OB Logo'
+  }" [navbarBrandMinimized]="{
+    src: '../../../assets/BHARAT-ONLINE_logo.jpg',
+    width: 10,
+    height: 10,
+    alt: 'OB Logo'
+  }" [asideMenuToggler]="false" sidebarToggler="lg" [mobileAsideMenuToggler]="false">
+  <ul class="nav navbar-nav d-md-down-none">
+    <li class="nav-item px-3">
+      <a class="nav-link" [routerLink]="['/dashboard']">Dashboard</a>
+    </li>
+  </ul>
+
+  <ul class="nav navbar-nav ms-auto">
+    <span class="text-muted mt-3">
+      <p style="font-size: 10px; color: #ebb105">( {{ userDetails?.role }} )</p>
+    </span>
+    <li class="nav-item dropdown" dropdown placement="bottom right">
+      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
+        dropdownToggle (click)="(false)">
+        <img src="assets/img/user.png" style="width: 35px; height: 35px" class="img-avatar mb-1"
+          alt="admin@bootstrapmaster.com" />
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div class="dropdown-header text-center">
+          <strong>Info</strong>
+        </div>
+        <a class="dropdown-item" (click)="viewProfile()">
+          <i class="fa fa-user"></i> Profile
+        </a>
+        <a class="dropdown-item" (click)="logout()"
+          *ngIf="['SUPER_ADMIN', 'ADMIN', 'SALES','MARKETING'].includes(userDetails?.role)">
+          <i class="fa fa-lock"></i> Logout
+        </a>
+      </div>
+    </li>
+  </ul>
+</app-header>
+<div class="app-body">
+  <app-sidebar #appSidebar [fixed]="true" [display]="'lg'" [minimized]="sidebarMinimized"
+    (minimizedChange)="toggleMinimize($event)">
+    <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="appSidebar.minimized">
+    </app-sidebar-nav>
+    <app-sidebar-minimizer></app-sidebar-minimizer>
+  </app-sidebar>
+  <main class="main">
+    <cui-breadcrumb> </cui-breadcrumb>
+    <div class="container-fluid px-0">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>
+<app-footer>
+  <span><a href="https://www.bharat-online.com/">Bharat Online</a> &copy; 2024
+    LIITS.</span>
+</app-footer>
+
+<!-- <ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="large"
+  color="var(--primary)"
+  type="timer"
+  [fullScreen]="true"
+>
+  <p style="color: var(--primary)">Loading...</p>
+</ngx-spinner> -->
+<ngx-spinner bdColor="rgba(0,0,0,0.8)" size="medium" color="#ff0000" type="timer" [fullScreen]="true">
+  <p style="color: rgb(247, 8, 8)">Loading Please Wait... </p>
+</ngx-spinner>

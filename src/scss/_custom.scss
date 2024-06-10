@@ -1,0 +1,225 @@
+*:not(i) {
+  font-family: "Times New Roman", Times, serif !important;
+  font-family: Helvetica, Ariel, sans-serif !important;
+}
+
+body {
+  background-color: tint-color($primary, 95%);
+}
+
+// Here you can add other styles
+.action-span {
+  display: inline-block;
+  width: 160px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  vertical-align: super;
+}
+
+.modal-text {
+  font-size: larger;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--danger);
+}
+
+.table-sticky > thead > tr > th,
+.table-sticky > thead > tr > td {
+  top: -2px;
+  position: sticky;
+  z-index: 9;
+}
+
+.table-responsive::-webkit-scrollbar {
+  width: 8px;
+  height: 5px;
+  cursor: pointer !important;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  background: var(--light);
+  cursor: pointer !important;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+  border-radius: 5px;
+  cursor: pointer !important;
+}
+
+.table-responsive {
+  height: 50vh;
+  // display: block;
+  // overflow-y: scroll;
+  // overflow-x: scroll;
+}
+
+// scss for drag and drop directive
+.dropzone {
+  height: 150px;
+  padding: 1.5rem;
+  text-align: center;
+  border: dashed 1px #979797;
+  border-radius: 0.4375rem;
+  position: relative;
+  margin: 0 auto;
+
+  input {
+    opacity: 0;
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+  }
+
+  label {
+    color: #ffffff;
+    width: 183px;
+    height: 34px;
+    border-radius: 9px;
+    background-color: var(--default);
+    padding: 7px 14px;
+    cursor: pointer;
+  }
+
+  h3 {
+    font-size: 1em;
+    font-weight: 600;
+    color: var(--default);
+  }
+}
+
+.fileover {
+  animation: shake 1s;
+  animation-iteration-count: infinite;
+}
+
+.files-list {
+  margin-top: 1.5rem;
+
+  .single-file {
+    display: flex;
+    padding: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
+    border: dashed 1px #979797;
+    margin-bottom: 1rem;
+
+    img.delete {
+      margin-left: 0.5rem;
+      cursor: pointer;
+      align-self: flex-end;
+    }
+
+    display: flex;
+    flex-grow: 1;
+
+    .name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #353f4a;
+      margin: 0;
+    }
+
+    .size {
+      font-size: 12px;
+      font-weight: 500;
+      color: #a4a4a4;
+      margin: 0;
+      margin-bottom: 0.4rem;
+    }
+
+    .info {
+      width: 100%;
+    }
+  }
+}
+
+.img-rounded {
+  border-radius: 50%;
+}
+
+.delete-badge {
+  position: absolute;
+  background: var(--danger);
+  height: 2rem;
+  // top:0.5rem;
+  // left: 5.1rem;
+  width: 2rem;
+  text-align: center;
+  line-height: 2rem;
+  font-size: 0.8rem;
+  border-radius: 50%;
+  color: #ffffff;
+  border: 1px solid var(--danger);
+  cursor: pointer;
+}
+
+.text-capitalised {
+  text-transform: capitalize;
+}
+
+.img-margin {
+  height: 100px;
+  width: 100px;
+  margin-right: 75px;
+}
+
+.dropdown-toggle::after {
+  display: inline-block !important;
+  vertical-align: 0.255em !important;
+  content: "" !important;
+  border-top: 0.3em solid !important;
+  border: 0 solid transparent;
+}
+
+.delete-icon {
+  height: 1.8rem;
+  width: 1.8rem;
+}
+.modal-body {
+  padding: 0rem;
+}
+
+.profile {
+  position: absolute;
+  bottom: 30px;
+  left: 40px;
+  place-items: center;
+  z-index: 3;
+  width: 96%;
+  .name {
+    font-size: 20px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.6;
+    letter-spacing: 0.15px;
+    text-transform: capitalize;
+    color: white;
+  }
+  .email {
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: 0.1px;
+    color: white;
+  }
+  .user-profile {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    cursor: pointer;
+    object-fit: cover;
+  }
+
+  .profile-edit {
+    border-radius: 100%;
+  }
+}

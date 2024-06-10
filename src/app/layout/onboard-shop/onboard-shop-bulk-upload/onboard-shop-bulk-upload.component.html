@@ -1,0 +1,77 @@
+<ng-container>
+    <div class="container px-4 mt-3">
+        <div class="card-header border-0">
+            <div class="row">
+                <div class="col-8">
+                    <h4 class="text-uppercase card-title text-default"><b>Upload Business List Excel File</b></h4>
+                </div>
+                <div class="col-4 text-right">
+                    <button type="button" class="btn btn-sm btn-outline-danger" aria-label="Close"
+                        (click)="dismissModal()">
+                        <span class="btn-inner--icon">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body py-0 ">
+            <form [formGroup]="uploadForm">
+                <div class="form-row">
+                    <div class="col">
+                        <label class=" mt-3">
+                            Upload Your Onboard Business List
+                        </label>
+                        <div *ngIf="fileUploaded" class="col mb-2 mx-3">
+                            <i (click)="removeUploadedFile()" class="delete-badge fa fa-trash shadow-sm ml-4"></i>
+                            <img *ngIf="filePath" class="img-rounded" src="assets/img/theme/placeholder_product.svg"
+                                height="100" width="100" alt="uploaded-file" />
+                            <div class="single-file">
+                                <div *ngIf="files[0]?.name" class="info">
+                                    <h5 class="name mb-0">
+                                        {{ files[0]?.name }}
+                                    </h5>
+                                    <small class="size mb-1">
+                                        {{ formatBytes(files[0]?.size) }}
+                                        <i class="fa fa-check-circle text-success pl-2" aria-hidden="true"></i>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="!fileUploaded" class="dropzone container round" appDnd
+                            (fileDropped)="onFileDropped($event)">
+                            <input type="file" #fileDropRef id="fileDropRef"
+                                (change)="fileBrowseHandler($event)"
+                                 />
+                            <i class="fa fa-upload fa-2x text-muted pb-2"></i>
+                            <h3>Drag and drop file or click here</h3>
+                            <small class="text-muted text-wrap">{{ options.fileInfo }}</small>
+                        </div>
+                        <div class="text-left">
+                            <ng-container *ngIf="displayMessage!=null">
+                                <small class="error-message">{{ displayMessage }}</small>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    <span class="text-black-100 font-14">
+                        <a class="btn-link mx-1 mt-3" role="button" (click)="downloadTemplate()"><b>Download</b></a>the excel template
+                        here that
+                        needs to be uploaded.
+                    </span>
+                </div>
+                <div class="d-flex justify-content-end my-3">
+                    <button class="btn btn-outline-danger text-capitalize mx-2" (click)="closeModal()">
+                        cancel
+                    </button>
+                    <button type="button" class="btn btn-success btn-blue text-capitalize"
+                        [disabled]="uploadForm.invalid" (click)="bulkUploadProduct()">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-container>

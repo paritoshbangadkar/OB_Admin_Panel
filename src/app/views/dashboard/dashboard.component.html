@@ -1,0 +1,45 @@
+<div class="animated fadeIn">
+  <div class="row mx-1 mt-2" *ngIf="['SUPER_ADMIN', 'ADMIN', 'SALES','MARKETING'].includes(userDetails?.role)">
+
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><b>Total Customer</b></h5>
+            <h6 class="card-text">Active :- {{totalCustomers?.active}}</h6>
+            <h6 class="card-text">Inactive :- {{totalCustomers?.inactive}}</h6>
+            <h6 class="card-text">Pending :- {{totalCustomers?.pending}}</h6>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><b>Total Shops</b></h5>
+            <h6 class="card-text">Active :- {{totalShops?.active}}</h6>
+            <h6 class="card-text">Inactive :- {{totalShops?.inactive}}</h6>
+            <h6 class="card-text">Guest :- {{totalShops?.pending}}</h6>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12" (click)="navigateTo()">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><b>Total Orders :- {{orderData?.totalOrders}}</b></h5>
+            <h6 class="card-text">New :- {{orderData.newOrders}}</h6>
+            <h6 class="card-text">Active :- {{orderData.activeOrders}}</h6>
+            <h6 class="card-text">Completed :- {{orderData.completedOrders}}</h6>
+            <h6 class="card-text">Cancelled :- {{orderData.cancelledOrders}}</h6>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><b>Total Transaction :- {{transactionData?.total}}</b></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

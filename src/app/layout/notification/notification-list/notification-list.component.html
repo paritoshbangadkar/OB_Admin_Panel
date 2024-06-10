@@ -1,0 +1,65 @@
+<div class="container-fluid animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-auto">
+          <h3 class="mb-0">Notification List</h3>
+        </div>
+        <div class="col-auto">
+          <button type="button" (click)="navigateTo('/notification/notification-form', null)"
+            class="btn btn-outline-primary">
+            <i class="fa fa-plus-circle me-1"></i>
+            Notification
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row mb-2">
+        <div class="col-md-5">
+          <form class="d-flex">
+            <input class="form-control" type="text" placeholder="Search" aria-label="Search" [(ngModel)]="search"
+              [ngModelOptions]="{ standalone: true }" (keyup)="refreshList('search')" />
+
+            <button class="btn btn-outline-danger ml-3" type="submit" (click)="refreshList('clear')"
+              ngbTooltip="Clear Filter">
+              <i class="fa fa-filter" aria-hidden="true"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="table-responsive text-nowrap">
+        <table class="table table-striped table-hover table-bordered table-sticky">
+          <thead class="table-primary">
+            <tr>
+              <th>Sr.No.</th>
+              <th>Image</th>
+              <th>Title</th>
+              <th>Message</th>
+              <th>Created On</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let u of notificationList; let i = index">
+              <td>{{ pageSize * (page - 1) + (i + 1) }}</td>
+              <td>
+                <div class="text-center">
+                  <img class="avatar" [src]="u.NotificationMedia.image || 'assets/img/placeholder_product.svg'" />
+                </div>
+
+              </td>
+              <td>{{ u.title | titlecase }}</td>
+              <td>{{ u.message | titlecase }}</td>
+              <td>{{ u.createdAt | date:"dd/MM/yyyy hh:mm a" }}</td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <app-custom-pagination [(page)]="page" [(pageSize)]="pageSize" [(collection)]="collection"
+        (myOutput)="onChangePage(page)"></app-custom-pagination>
+    </div>
+  </div>
+</div>

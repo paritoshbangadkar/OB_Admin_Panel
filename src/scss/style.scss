@@ -1,0 +1,77 @@
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles
+@import "~@coreui/coreui/scss/coreui";
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+// If you want to add something do it here
+@import "custom";
+
+@import "~ngx-toastr/toastr";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+
+.main .container-fluid {
+  padding: 0 10px;
+  margin-bottom: 0;
+}
+
+
+.dropdown-item {
+  cursor: pointer;
+}
+
+.breadcrumb {
+  margin-bottom: 14px;
+}
+
+ngb-modal-backdrop.modal-backdrop.fade.show {
+  z-index: 1020 !important;
+}
+
+.form-select {
+  padding: 0.25rem 2.25rem 0.25rem 0.75rem !important;
+}
+
+.btn:disabled {
+  cursor: not-allowed !important;
+}
+
+.nav-logo {
+  width: 140px;
+}
+
+@media(max-width:768px) {
+  .nav-logo {
+    width: 200px;
+  }
+}
+
+@media(max-width:425px) {
+  .app-header .navbar-brand {
+    left: 36%;
+  }
+
+  .nav-logo {
+    width: 160px;
+  }
+}
+
+.text-area {
+  background-color: var(--bs-table-striped-bg);
+  border: 0px;
+}
+
+.error-message {
+  color: $red;
+}
+
+.text-center {
+  .avatar {
+    border-radius: 50px;
+    height: 3rem;
+    width: 3rem;
+    object-fit: cover;
+  }
+}

@@ -1,0 +1,234 @@
+<div class="container-fluid animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-auto">
+          <h3 class="mb-0">Catalogue</h3>
+        </div>
+        <div class="col-auto">
+          <button type="button" (click)="add()" class="btn btn-outline-primary">
+            <i class="fa fa-plus-circle me-1"></i>
+            Catalogue
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body" *ngIf="catalogueArr?.length>0;else noData">
+      <div class="row">
+        <div class="col-md-5 pr-0 ml-2">
+          <div class="col mar mb-4">
+            <form class="d-flex">
+              <input class="form-control" type="text" placeholder="Search" aria-label="Search" [(ngModel)]="search"
+                [ngModelOptions]="{ standalone: true }" (keyup)="refreshList('search')" />
+              <div class="col-auto">
+                <button type="button" type="submit" (click)="refreshList('clear')" class="btn btn-outline-danger">
+                  <i class="fa fa-filter" aria-hidden="true"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!--
+        <div class="col-md-5 pr-0">
+          <ng-select [items]="subCategoryArr" [(ngModel)]="subCategoryId" bindLabel="name"
+            placeholder="Select Sub Category" bindValue="_id" (change)="getAll()" [clearable]="false">
+          </ng-select>
+        </div> -->
+
+        <!-- <div class="col">
+          <button class="btn btn-outline-danger ml-3" type="submit" (click)="refreshList('clear')"
+            ngbTooltip="Clear Filter">
+            <i class="fa fa-filter" aria-hidden="true"></i>
+          </button>
+        </div> -->
+      </div>
+
+      <div class="table-responsive text-nowrap">
+        <table class="table table-striped table-hover table-bordered table-sticky">
+          <thead class="table-primary">
+            <tr>
+              <th>Sr.No.</th>
+              <th>Product Name</th>
+              <th>Sub Category</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Is Event</th>
+              <th>Created At</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let u of catalogueArr; let i = index">
+              <td (click)="view(u)">{{ pageSize * (page - 1) + (i + 1) }}</td>
+              <td (click)="view(u)">{{ u.title | titlecase }}</td>
+              <td (click)="view(u)">
+                {{ u?.subCategory[0]?.name | titlecase }}</td>
+
+              <td (click)="view(u)">
+                <span class="action-span" placement="left" ngbTooltip="{{ u.description }}">
+                  {{ u.description | titlecase }}
+                </span>
+              </td>
+              <td (click)="view(u)">{{ u.price }}</td>
+              <td (click)="view(u)" class="text-center">{{ u.isEvent ? "Yes":"-"}}</td>
+              <td>{{ u.createdAt | date:"dd/MM/yyyy hh:mm a" }}</td>
+              <td (click)="view(u)">{{ u.status | titlecase }}</td>
+
+              <!-- catalogue images -->
+              <!-- <td>
+                <div *ngIf="u.contentType!='.mp4'">
+                    <img class="avatar" *ngIf="u.image" [src]=" u.image " />
+                    <img class="avatar" *ngIf="!u.image" src="assets/img/placeholder_product.svg" />
+                </div>
+                <div class="advertise" *ngIf="u.contentType=='.mp4'">
+                    <video class="avatar" type="video/mp4">
+                        <source class="avatar" src="{{u.image}} " type='video/mp4' />
+                    </video>
+                </div>
+            </td> -->
+
+              <td>
+                <div class="col">
+                  <div ngbDropdown container="body">
+                    <button ngbDropdownToggle id="dropdownBasic1"
+                      class="btn btn-icon btn-2 btn-sm btn-neutral text-default" type="button">
+                      <span class="btn-inner--icon"><i class="fa fa-ellipsis-v text-danger"
+                          aria-hidden="true"></i></span>
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                      <button ngbDropdownItem class="btn btn-sm btn-outline-warning me-1" (click)="view(u)">
+                        <i class="fa fa-pencil-square text-danger" aria-hidden="true"></i>Edit
+                      </button>
+                      <button ngbDropdownItem (click)="openConfirmStatusChange(u,changeStatus)">
+                        <ng-container *ngIf="u?.status === 'active'">
+                          <i class="fa fa-lock text-danger"></i>Inactive
+                          <!-- Block -->
+                        </ng-container>
+                        <ng-container *ngIf="u?.status === 'inactive'">
+                          <i class="fa fa-unlock text-danger"></i>Active
+                          <!-- Un-block -->
+
+                        </ng-container>
+                      </button>
+                      <button ngbDropdownItem class="btn btn-sm btn-outline-danger" (click)="open(u, alertMsg)"><i
+                          class="fa fa-trash text-danger"></i>Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <app-custom-pagination [(page)]="page" [(pageSize)]="pageSize" [(collection)]="collection"
+        (myOutput)="onChangePage(page)"></app-custom-pagination>
+    </div>
+  </div>
+</div>
+
+<ng-template #noData>
+  <div class="text-center mt-3">
+    <h4>No Business Catalogue Found</h4>
+  </div>
+</ng-template>
+
+<ng-template #alertMsg let-modal>
+  <div class="row mt-3 me-2">
+    <div class="col-md-10 col-sm-10"></div>
+    <div class="col-md-2 col-sm-2 text-right">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+        (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="modal-body text-center px-0">
+    <h5 class="text-warning">
+      <img src="../../../../assets/img/warning.png" class="mr-3 delete-icon" alt="" />
+
+      Are you sure you want to Delete ?
+    </h5>
+    <div class="clearfix modal-text">
+      <label *ngIf="selectedRow.title">
+        <h5>{{ selectedRow.title }}</h5>
+      </label>
+    </div>
+  </div>
+  <div class="model-footer border-0 text-center px-0 pb-4">
+    <div class="clearfix">
+      <button class="btn btn-danger me-2" (click)="delete()">OK</button>
+      <button class="btn btn-success" (click)="modal.dismiss('Cross click')">
+        Cancel
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #content2 let-modal class="width">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">View Catalogue Images</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive text-nowrap coll-table">
+      <table class="table table-hover table-bordered table-sticky">
+        <thead>
+          <tr class="table-head-bg">
+            <th scope="col">Sr.No</th>
+            <th scope="col">Images</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of catalogueArr; let i = index">
+            <td>{{ pageSize * (page - 1) + (i + 1) }}</td>
+
+            <td>
+              <div *ngFor="let v of u.image">
+                <!-- <img src="{{ v }}" height="30" class="product-image" /> -->
+                <img class="avatar" *ngIf="v" [src]="v" />
+                <img class="avatar" *ngIf="!v" src="assets/img/placeholder_product.svg" />
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #changeStatus let-modal>
+  <div class="row mt-3 me-3">
+    <div class="col-md-10 col-sm-10"></div>
+    <div class="col-md-2 col-sm-2 text-right">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+        (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="modal-body text-center px-0">
+    <h5 class="text-warning" *ngIf="selectedRow?.status === 'active'">
+      <img src="../../../../assets/img/warning.png" class="mr-3 delete-icon" *ngIf="selectedRow?.status === 'active'"
+        alt="" />
+      Are you sure you want to inactive?
+    </h5>
+    <h5 class="text-warning" *ngIf="selectedRow?.status === 'inactive'">
+      <img src="../../../../assets/img/warning.png" class="mr-3 delete-icon" *ngIf="selectedRow?.status === 'inactive'"
+        alt="" />
+      Are you sure you want to active?
+    </h5>
+    <div class="clearfix modal-text"></div>
+  </div>
+  <div class="model-footer border-0 text-center px-0 pb-4">
+    <div class="clearfix py-2">
+      <button class="btn btn-danger me-2" (click)="changeProductStatus(this.selectedRow._id)">
+        OK
+      </button>
+      <button class="btn btn-success" (click)="modal.dismiss('Cross click')">
+        Cancel
+      </button>
+    </div>
+  </div>
+</ng-template>

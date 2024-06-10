@@ -1,0 +1,172 @@
+<div class="container-fluid animated fadeIn">
+  <div class="card shadow-sm">
+    <div class="card-header">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-auto">
+          <h3 class="mb-0">Offer Form</h3>
+        </div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-danger" (click)="goBack()">
+            <i class="fa fa-arrow-left me-1" aria-hidden="true"></i>
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <form [formGroup]="offerForm" class="form-horizontal">
+        <div class="row">
+          <div class="form-group">
+            <label>Title</label>
+            <span class="text-danger">*</span>
+            <div class="input-group input-group-alternative">
+              <input type="text" class="form-control" formControlName="title" placeholder="Enter Title" />
+            </div>
+            <div class="text-left" *ngFor="let error of errorMessages.title">
+              <ng-container *ngIf="form.title.hasError(error.type) && (form.title.dirty || form.title.touched)">
+                <small class="error-message">{{error.message}}</small>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label>Description</label>
+            <div class="input-group input-group-alternative">
+              <input type="text" class="form-control" formControlName="description" placeholder="Enter  description" />
+            </div>
+            <div class="text-left" *ngFor="let error of errorMessages.description">
+              <ng-container
+                *ngIf="form.description.hasError(error.type) && (form.description.dirty || form.description.touched)">
+                <small class="error-message">{{error.message}}</small>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-6">
+            <div class="form-group">
+              <label>Start date</label>
+              <span class="text-danger">*</span>
+              <div class="input-group">
+                <input class="form-control" placeholder="dd-mm-yyyy" name="dp1" formControlName="startDate"
+                  ngbDatepicker #d1="ngbDatepicker" [autoClose]="true" outsideDays="hidden" [minDate]="todayDate">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary" (click)="d1.toggle()" type="button"><i class="fa fa-calendar"
+                      aria-hidden="true"></i></button>
+                </div>
+              </div>
+              <div class="text-left" *ngFor="let error of errorMessages.startDate">
+                <ng-container
+                  *ngIf="form.startDate.hasError(error.type) && (form.startDate.dirty || form.startDate.touched)">
+                  <small class="error-message">{{error.message}}</small>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group pl-4">
+              <label>End date</label>
+              <span class="text-danger">*</span>
+              <div class="input-group">
+                <input class="form-control" placeholder="dd-mm-yyyy" name="dp2" formControlName="endDate" ngbDatepicker
+                  #d2="ngbDatepicker" outsideDays="hidden" [autoClose]="true" [minDate]="form.startDate.value">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary" (click)="d2.toggle()" type="button"><i class="fa fa-calendar"
+                      aria-hidden="true"></i></button>
+                </div>
+              </div>
+              <div class="text-left" *ngFor="let error of errorMessages.endDate">
+                <ng-container *ngIf="form.endDate.hasError(error.type) && (form.endDate.dirty || form.endDate.touched)">
+                  <small class="error-message">{{error.message}}</small>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-6" *ngIf="!isCategory">
+            <div class="form-group">
+              <label>Business</label>
+              <ng-select class="custom" formControlName="shopId" [editableSearchTerm]="true"
+                (scrollToEnd)="onScrollShop()" [virtualScroll]="true" (change)="setShop($event)">
+                <ng-option *ngFor="let item of shopData" [value]="item?.shopDetails?._id">
+                  {{ item?.shopDetails?.shopName | uppercase }}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+
+          <div class="col-6" *ngIf="isCategory">
+            <div class="form-group">
+              <label>Category</label>
+              <ng-select class="custom" formControlName="categoryId" [editableSearchTerm]="true"
+                (scrollToEnd)="onScrollCategory()" [virtualScroll]="true" (change)="setCategory($event)">
+                <ng-option *ngFor="let item of categoryData" [value]="item?._id">
+                  {{ item?.name | uppercase }}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-9 pt-3" *ngIf="!form.image.value">
+                <div class="form-group satFat-logoBody">
+                  <label for="Offer Image">Upload Image
+                    <span class="text-danger">*</span>
+                  </label>
+                  <ngx-file-drop class="ngx-fileDropBody" dropZoneClassName="satFat-dropZoneBody imgBorderYes"
+                    contentClassName="satFat-contentBody" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
+                    (onFileLeave)="fileLeave($event)" accept="image/jpeg, image/png, image/gif">
+                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                      <div class="align-self-center"></div>
+
+                      <div class="imgNone d-flex flex-column text-center">
+                        <div class="cloudIcon">
+                          <i class="fa fa-cloud-upload"></i>
+                        </div>
+                        Upload File (Drag & Drop)
+                        <div class="text-dark">OR</div>
+                        <button type="button" (click)="openFileSelector()">
+                          Browse File
+                        </button>
+                      </div>
+                    </ng-template>
+                  </ngx-file-drop>
+                </div>
+                <div class="text-left" *ngFor="let error of errorMessages.image">
+                  <ng-container *ngIf="form.image.hasError(error.type) && (form.image.dirty || form.image.touched)">
+                    <small class="error-message">{{error.message}}</small>
+                  </ng-container>
+                </div>
+              </div>
+
+              <div class="col-md-3 text-center align-self-center" *ngIf="form.image.value;">
+                <i (click)="removeUploadedImage()" class="delete-badge fa fa-trash shadow-sm"></i>
+                <img [src]="form.image.value" class="img-fluid img-size" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="mb-2 text-center">
+        <button type="button" class="btn btn-success" *ngIf="!this.offerForm.value.id" (click)="create()">
+          Save
+        </button>
+        <button type="button" class="btn btn-success" *ngIf="this.offerForm.value.id" (click)="update()">
+          Update
+        </button>
+        <button type="button" class="btn btn-outline-danger mx-2" (click)="goBack()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

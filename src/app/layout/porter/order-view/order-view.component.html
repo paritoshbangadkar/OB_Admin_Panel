@@ -1,0 +1,340 @@
+<div class="close-btn">
+    <button type="button" class="btn btn-icon btn-sm btn-neutral text-default close-icon mt-3" aria-label="Close"
+        (click)="closeModal()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+</div>
+<ng-container>
+    <div class="card profile-card border-0">
+        <div class="card-body">
+            <h3>Order Number: {{viewOrderData?.order_id}}</h3>
+            <div class="my-4">
+                <div class="d-flex justify-content-between receipt-items">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize"><strong>User Name</strong></span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-capitalize">
+                            {{viewOrderData?.customerDetails?.firstName}}
+                            {{viewOrderData?.customerDetails?.lastName}}</span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between receipt-items">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize"><strong>Mobile No.</strong></span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-capitalize">
+                            {{viewOrderData?.customerDetails?.countryCode}}-{{viewOrderData?.customerDetails?.mobileNumber}}</span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between receipt-items">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize"><strong>Requested By</strong></span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-capitalize">
+                            {{viewOrderData?.customerDetails?.role}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="card bg-secondary">
+                            <div class="card-body">
+                                <div class="row">
+                                    <label class="">Customer Details</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Name:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.customerDetails?.firstName}}
+                                        {{viewOrderData?.customerDetails?.lastName}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Mobile Number:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.customerDetails?.countryCode}}-{{viewOrderData?.customerDetails?.mobileNumber}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Address:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.userAddress?.apartment_address}}
+                                        {{viewOrderData?.userAddress?.street_address1}}
+                                        {{viewOrderData?.userAddress?.street_address2}}
+                                        {{viewOrderData?.userAddress?.landmark}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">City:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.userAddress?.city}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">State:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.userAddress?.state}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Pincode:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.userAddress?.pincode}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Country:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.userAddress?.country}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="card bg-secondary">
+                            <div class="card-body">
+                                <div class="row">
+                                    <label class="">Business Owner Details</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Name:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.shopOwnerName}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Mobile Number:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.shopOwnerMobileNumber}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Address:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.shopAddress?.apartment_address}}
+                                        {{viewOrderData?.shopAddress?.street_address1}}
+                                        {{viewOrderData?.shopAddress?.street_address2}}
+                                        {{viewOrderData?.shopAddress?.landmark}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">City:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.shopAddress?.city}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">State:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.shopAddress?.state}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Pincode:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.shopAddress?.pincode}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Country:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.shopAddress?.country}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="card bg-secondary">
+                            <div class="card-body">
+                                <div class="row">
+                                    <label class="">Order Details</label>
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Order Number:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{ viewOrderData?.order_id}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0 ">
+                                        <strong class="">Order Status:</strong>
+                                    </div>
+                                    <div class="col-7 p-0 text-capitalize">
+                                        {{viewOrderData?.porterStatus}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Estimate Pickup Time:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{getDate}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Estimate Fare Amount:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{
+                                        viewOrderData?.estimated_fare_details?.currency}}-{{viewOrderData?.estimated_fare_details?.minor_amount
+                                        | rupees}}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Tracking URL:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.tracking_url}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Partner Name:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.partnerInfo?.name}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Partner Mobile No.:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.partnerInfo?.countryCode1}}-{{viewOrderData?.partnerInfo?.mobileNumber1}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Partner Vehicle Info.:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.partnerInfo?.vehicleType}}-{{viewOrderData?.partnerInfo?.vehicleNumber}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Order Pickup Time:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.orderTiming?.pickupTime | ePochDate}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Order Accept Time:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.orderTiming?.orderAcceptedTime | ePochDate}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Order Start Time:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.orderTiming?.orderStartedTime |ePochDate}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Order End Time:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.orderTiming?.orderEndedTime | ePochDate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="card bg-secondary">
+                            <div class="card-body">
+                                <div class="row">
+                                    <label class="">Order Payment Details</label>
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Delivery Charge:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{ viewOrderData?.paymentDetail?.deliveryCharge}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Platform Fee:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{ viewOrderData?.paymentDetail?.platformFee}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Total:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.paymentDetail?.totalPrice}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">GST 18%:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{
+                                        viewOrderData?.paymentDetail?.GST?.toFixed(2)}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Grand Total:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.paymentDetail?.grandTotal?.toFixed(2)}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

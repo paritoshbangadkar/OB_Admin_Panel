@@ -1,0 +1,66 @@
+<div class="inner-header d-flex justify-content-between mx-4">
+	<div class="clearfix">
+		<ol class="breadcrumb inner-header-breadrumb">
+			<li class="breadcrumb-item" (click)="goBack()">Business Listing</li>
+			<li class="breadcrumb-item" aria-current="page" *ngIf="!params?._id">{{shopData?.shopDetails?.shopName}}
+			</li>
+		</ol>
+	</div>
+</div>
+<div class="container-fluid  mx-3">
+	<div class="card profile-head-card" *ngIf="shopData?.shopDetails?.shopName">
+		<img [src]="getUrl" class="card-top-image">
+		<div class="profile">
+			<div class="row justify-content-between align-items-center ">
+				<div class="col-7 d-flex align-items-center">
+					<div>
+						<div class="clearfix">
+							<img [src]="shopData?.profilePicture
+							|| 'assets/img/placeholder_logo.png'" class="img-fluid user-profile">
+						</div>
+					</div>
+					<div class="clearfix pl-2">
+						<label class="mb-0 name font text-white">{{shopData?.shopDetails.shopName || 'Shop name'}}</label>
+						<p class="text-white font text-capitalize">{{shopData?.firstName}} {{shopData?.lastName}}
+						</p>
+					</div>
+				</div>
+				<div class="col-4 d-flex align-items-center" *ngIf="shopData?.mobileNumber">
+					<div class="media">
+						<div class="media-body">
+							<label class="mb-0 pb-0 font text-white">Phone</label>
+							<p class="text-white font">{{shopData?.mobileNumber}}</p>
+						</div>
+					</div>
+					<div class="media pl-3" *ngIf="shopData?.email">
+						<div class="media-body">
+							<label class="mb-0 pb-0 font text-white">Email</label>
+							<p class="text-white font">{{shopData?.email}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card-body py-0">
+			<div class="d-flex align-items-center justify-content-between" style="padding-left:120px;">
+				<div class="clearfix" >
+					<ul ngbNav [(activeId)]="activeTab" class="nav nav-tabs w-100 flex-nowrap ov-scroll ">
+						<li class="nav-link text-nowrap" [ngbNavItem]="link.fragment" *ngFor="let link of links">
+							<a ngbNavLink [routerLink]="link.fragment" [queryParams]="{id:shopData?._id}"
+								routerLinkActive="router-link-active" class="text-capitalize">
+								{{ link.title }}
+							</a>
+						</li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="card-body px-0 mt-1 mb-0 pt-2">
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+</div>

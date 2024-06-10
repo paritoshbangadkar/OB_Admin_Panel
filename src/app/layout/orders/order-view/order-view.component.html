@@ -1,0 +1,126 @@
+<div class="close-btn">
+    <button type="button" class="btn btn-icon btn-sm btn-neutral text-default close-icon mt-3" aria-label="Close"
+        (click)="closeModal()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+</div>
+<ng-container>
+    <div class="card profile-card border-0">
+        <div class="card-body">
+            <h3>Order Number: {{viewOrderData?.orderNumber}}</h3>
+            <div class="my-4">
+                <div *ngIf="viewOrderData?.status" class="d-flex justify-content-between receipt-items">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize"><strong>Order Primary Status</strong></span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-capitalize">
+                            {{viewOrderData?.status}}</span>
+                    </div>
+                </div>
+                <div *ngIf="viewOrderData?.secondaryStatus" class="d-flex justify-content-between receipt-items">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize"><strong>Order Secondary Status</strong></span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-capitalize">
+                            {{viewOrderData?.secondaryStatus}}</span>
+                    </div>
+                </div>
+                <div *ngIf="viewOrderData?.porterStatus" class="d-flex justify-content-between receipt-items">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize"><strong>Order Porter Status</strong></span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-capitalize">
+                            {{viewOrderData?.porterStatus}}</span>
+                    </div>
+                </div>
+                <div *ngIf="viewOrderData?.amount" class="d-flex justify-content-between receipt-items">
+                    <div class="clearfix">
+                        <span class="text-label text-capitalize"><strong>Order Amount</strong></span>
+                    </div>
+                    <div class="clearfix">
+                        <span class="text-capitalize">
+                            {{viewOrderData?.amount}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="card bg-secondary">
+                            <div class="card-body">
+                                <div class="row">
+                                    <label class="">Customer Details</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Name:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.customerDetails[0]?.firstName}}
+                                        {{viewOrderData?.customerDetails[0]?.lastName}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Mobile Number:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        +91-{{viewOrderData?.customerDetails[0]?.mobileNumber}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="card bg-secondary">
+                            <div class="card-body">
+                                <div class="row">
+                                    <label class="">Business Owner Details</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Business Name:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.shop?.shopName}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Business Owner Name:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.shopDetails[0]?.firstName}}
+                                        {{viewOrderData?.shopDetails[0]?.lastName}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Mobile Number:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        +91-{{viewOrderData?.shopDetails[0]?.mobileNumber}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 p-0">
+                                        <strong class="">Address:</strong>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        {{viewOrderData?.shopDetails[0]?.address?.line1}}
+                                        {{viewOrderData?.shopDetails[0]?.address?.line2}}
+                                        {{viewOrderData?.shopDetails[0]?.address?.city}}
+                                        {{viewOrderData?.shopDetails[0]?.address?.state}}
+                                        {{viewOrderData?.shopDetails[0]?.address?.country}}
+                                        {{viewOrderData?.shopDetails[0]?.address?.pincode}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

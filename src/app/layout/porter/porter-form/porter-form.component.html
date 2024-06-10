@@ -1,0 +1,62 @@
+<div class="container-fluid animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-auto">
+          <h3 class="mb-0">Porter</h3>
+        </div>
+      </div>
+    </div>
+    <!-- deactivated porter service -->
+    <div div *ngIf="!request">
+      <div class="card-body">
+        <div class="card-header">
+          <div class="row">
+            <div class="row">
+              <div class="col-12">
+                <label class="form-label">Deactivated porter service</label>
+                <ng-select interface="popover" [(ngModel)]="isPorterService" placeholder="Deactivated porter service">
+                  <ng-option [value]="false">Deactivated porter service</ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mb-3 mt-3">
+        <button (click)="updatePorterService()" type="button" class="btn btn-success">
+          Update
+        </button>
+        <button (click)="goBack()" class="btn btn-outline-danger mx-2">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+ <!-- active porter service -->
+    <div *ngIf="request">
+      <div class="card-body">
+        <div class="card-header">
+          <div class="row">
+            <div class="row">
+              <div class="col-12">
+                <label class="form-label">Update Porter request</label>
+                <ng-select interface="popover" [(ngModel)]="isPorterRequest">
+                  <ng-option *ngFor="let item of porterStatus" [value]="item">{{ item }}</ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mb-3 mt-3">
+        <button (click)="updatePorterService()" type="button" class="btn btn-success">
+          Update
+        </button>
+        <button (click)="goBack()" class="btn btn-outline-danger mx-2">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+  </div>

@@ -1,0 +1,113 @@
+<div class="container-fluid animated fadeIn">
+  <div class="card shadow-sm">
+    <div class="card-header">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-auto">
+          <h3 class="mb-0">Subscription Form</h3>
+        </div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-danger" (click)="goBack()">
+            <i class="fa fa-arrow-left me-1" aria-hidden="true"></i>
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div [formGroup]="subscriptionForm">
+        <div class="row my-2">
+          <div class="col-6">
+            <label class="form-label">
+              Plan Type
+              <span class="text-danger">*</span>
+            </label>
+
+            <ng-select [items]="subscriptionPlanType" bindLabel="label" bindValue="value" [clearable]="false"
+              [multiple]="false" formControlName="planType" (change)="setSlotField($event)">
+            </ng-select>
+
+            <div class="text-left" *ngFor="let error of errorMessages.planType">
+              <ng-container *ngIf="
+                  form.planType.hasError(error.type) &&
+                  (form.planType.dirty || form.planType.touched)
+                ">
+                <small class="error-message">{{ error.message }}</small>
+              </ng-container>
+            </div>
+          </div>
+          <div class="col-6">
+            <label class="form-label">Slot
+              <span class="text-danger">*</span>
+            </label>
+
+            <ng-select [items]="slotEnum" bindLabel="label" bindValue="value" [clearable]="false" [multiple]="false"
+              formControlName="slot">
+            </ng-select>
+            <div class="text-left" *ngFor="let error of errorMessages.slot">
+              <ng-container *ngIf="
+                  form.slot.hasError(error.type) &&
+                  (form.slot.dirty || form.slot.touched)
+                ">
+                <small class="error-message">{{ error.message }}</small>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <div class="row my-2">
+          <div class="col-6">
+            <label class="form-label">
+              Duration
+              <span class="text-danger">*</span>
+            </label>
+
+            <ng-select [items]="durationEnum" bindLabel="label" bindValue="value" [clearable]="false" [multiple]="false"
+              formControlName="duration">
+            </ng-select>
+
+            <div class="text-left" *ngFor="let error of errorMessages.duration">
+              <ng-container *ngIf="
+                  form.duration.hasError(error.type) &&
+                  (form.duration.dirty || form.duration.touched)
+                ">
+                <small class="error-message">{{ error.message }}</small>
+              </ng-container>
+            </div>
+          </div>
+          <div class="col-6">
+            <label class="form-label">
+              Amount
+              <span class="text-danger">*</span>
+            </label>
+
+            <div class="input-group input-group-alternative">
+              <input type="number" class="form-control" formControlName="amount"
+                placeholder="Enter  Amount In Number" />
+            </div>
+
+            <div class="text-left" *ngFor="let error of errorMessages.amount">
+              <ng-container *ngIf="
+                  form.amount.hasError(error.type) &&
+                  (form.amount.dirty || form.amount.touched)
+                ">
+                <small class="error-message">{{ error.message }}</small>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="my-3 text-center">
+        <button type="button" class="btn btn-success" *ngIf="!this.subscriptionForm.value.id" (click)="create()">
+          Save
+        </button>
+        <button type="button" class="btn btn-success" *ngIf="this.subscriptionForm.value.id" (click)="update()">
+          Update
+        </button>
+        <button type="button" class="btn btn-outline-danger mx-2" (click)="goBack()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

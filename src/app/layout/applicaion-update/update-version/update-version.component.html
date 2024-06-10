@@ -1,0 +1,93 @@
+<div class="container-fluid animated fadeIn">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-auto">
+                    <h3 class="mb-0">Manage Application Version</h3>
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-danger" (click)="goBack()">
+                        <i class="fa fa-arrow-left me-1" aria-hidden="true"></i>
+                        Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="versionForm" class="form-horizontal">
+                <div class="row">
+                    <div class="col-6">
+                        <label>Customer App Android Version</label>
+                        <div class="input-group input-group-alternative">
+                            <input type="text" class="form-control" formControlName="customerAppAndroid"
+                                placeholder="Enter Android Version" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label>Customer App Ios Version</label>
+                        <div class="input-group input-group-alternative">
+                            <input type="text" class="form-control" formControlName="customerAppIos"
+                                placeholder="Enter Ios Version" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <label>Shop App Android Version</label>
+                        <div class="input-group input-group-alternative">
+                            <input type="text" class="form-control" formControlName="shopAppAndroid"
+                                placeholder="Enter Android Version" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label>Shop App Ios Version</label>
+                        <div class="input-group input-group-alternative">
+                            <input type="text" class="form-control" formControlName="shopAppIos"
+                                placeholder="Enter Ios Version" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="mb-2 text-center">
+            <button type="button" class="btn btn-success" (click)="open( alertMsg)">
+                Update
+            </button>
+            <button type="button" class="btn btn-outline-danger mx-2" (click)="goBack()">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
+<ng-template #alertMsg let-modal>
+    <div class="row mt-3 me-2">
+        <div class="col-md-10 col-sm-10"></div>
+        <div class="col-md-2 col-sm-2 text-right">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body text-center px-0">
+        <!-- //input field// -->
+
+        <div class="col">
+            <label>Enter Verification Pin</label>
+            <div class="input-group input-group-alternative">
+                <input type="number" class="form-control" [(ngModel)]="pinCode" placeholder="Enter verification pin" />
+            </div>
+        </div>
+    </div>
+    <div class="model-footer border-0 text-center px-0 pb-4 mt-3">
+        <div class="clearfix">
+            <button class="btn btn-success me-2" (click)="verifyPin()">Verify PIN</button>
+            <button class="btn btn-danger" (click)="modal.dismiss('Cross click')">
+                Cancel
+            </button>
+        </div>
+    </div>
+</ng-template>

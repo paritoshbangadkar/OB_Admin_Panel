@@ -1,0 +1,696 @@
+<div class="container-fluid animated fadeIn">
+  <div class="card">
+    <form [formGroup]="shopForm" class="form-horizontal">
+      <div class="card-header">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-auto">
+            <h3 class="mb-0">Business Details</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+
+        <div class="row">
+          <div class="col-md-6">
+            <div>
+              <label class="form-label">
+                First Name
+                <span class="text-danger">*</span>
+              </label>
+              <input formControlName="firstName" type="text" class="form-control" placeholder="Enter First Name" />
+            </div>
+            <div class="text-left" *ngFor="let error of errorMessages.firstName">
+              <ng-container *ngIf="
+                  form.firstName.hasError(error.type) &&
+                  (form.firstName.dirty || form.firstName.touched)
+                ">
+                <small class="error-message">{{ error.message }}</small>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div>
+              <label class="form-label">
+                Last Name
+                <span class="text-danger">*</span>
+              </label>
+              <input formControlName="lastName" type="text" class="form-control" placeholder="Enter Last Name" />
+            </div>
+            <div class="text-left" *ngFor="let error of errorMessages.lastName">
+              <ng-container *ngIf="
+                  form.lastName.hasError(error.type) &&
+                  (form.lastName.dirty || form.lastName.touched)
+                ">
+                <small class="error-message">{{ error.message }}</small>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="col-md-6 mt-2">
+            <div formGroupName="shopDetails">
+              <div>
+                <label class="form-label">
+                  Business Name
+                  <span class="text-danger">*</span>
+                </label>
+                <input formControlName="shopName" type="text" class="form-control" placeholder="Enter Shop Name" />
+              </div>
+              <div class="text-left">
+                <ng-container *ngIf="
+                    form['shopDetails'].get('shopName').invalid &&
+                    (form['shopDetails'].get('shopName').dirty ||
+                      form['shopDetails'].get('shopName').touched)
+                  ">
+                  <small class="error-message">Please enter shop name</small>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 mt-2">
+            <div class="form-group">
+              <label>Select Gender</label>
+              <div>
+                <ng-select interface="popover" formControlName="gender" placeholder="Select Gender">
+                  <ng-option [value]="'male'">Male</ng-option>
+                  <ng-option [value]="'female'">Female</ng-option>
+                  <ng-option [value]="'other'">Other</ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div>
+              <label class="form-label">
+                Email
+                <span class="text-danger">*</span>
+              </label>
+              <input formControlName="email" type="text" id="email" name="email" class="form-control"
+                placeholder="Enter Email" />
+            </div>
+            <div class="text-left" *ngFor="let error of errorMessages.email">
+              <ng-container *ngIf="
+                  form.email.hasError(error.type) &&
+                  (form.email.dirty || form.email.touched)
+                ">
+                <small class="error-message">{{ error.message }}</small>
+              </ng-container>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div>
+              <label class="form-label">
+                Mobile Number
+                <span class="text-danger">*</span>
+              </label>
+              <input formControlName="mobileNumber" type="tel" id="mobileNumber" class="form-control" minlength="10"
+                maxlength="10" placeholder="Enter Mobile Number" />
+            </div>
+            <div class="text-left" *ngFor="let error of errorMessages.mobileNumber">
+              <ng-container *ngIf="
+                  form.mobileNumber.hasError(error.type) &&
+                  (form.mobileNumber.dirty || form.mobileNumber.touched)
+                ">
+                <small class="error-message">{{ error.message }}</small>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <div formGroupName="shopDetails">
+          <div class="row">
+            <div class="my-3">
+              <label> Business Type <span class="text-danger">*</span></label>
+              <ng-select [items]="businessArr" [multiple]="true" bindLabel="name" bindValue="_id" [clearable]="false"
+                formControlName="businessTypeId">
+              </ng-select>
+            </div>
+            <div class="text-left">
+              <ng-container *ngIf="
+                  form['shopDetails'].get('businessTypeId').invalid &&
+                  (form['shopDetails'].get('businessTypeId').dirty ||
+                    form['shopDetails'].get('businessTypeId').touched)
+                ">
+                <small class="error-message">Please select business type</small>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="my-3">
+              <label> Category <span class="text-danger">*</span></label>
+              <ng-select [items]="categoryList" bindLabel="name" bindValue="_id" [clearable]="false"
+                formControlName="categoryId" (change)="getAllSubCategory($event)">
+              </ng-select>
+            </div>
+            <div class="text-left">
+              <ng-container *ngIf="
+                  form['shopDetails'].get('categoryId').invalid &&
+                  (form['shopDetails'].get('categoryId').dirty ||
+                    form['shopDetails'].get('categoryId').touched)
+                ">
+                <small class="error-message">Please select category</small>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="my-3">
+              <label for="trade">Sub Category <span class="text-danger">*</span></label>
+              <ng-select [multiple]="true" [items]="subCategoryArr" bindLabel="name" bindValue="_id"
+                formControlName="subCategoryId"></ng-select>
+            </div>
+            <div class="text-left">
+              <ng-container *ngIf="
+                  form['shopDetails'].get('subCategoryId').invalid &&
+                  (form['shopDetails'].get('subCategoryId').dirty ||
+                    form['shopDetails'].get('subCategoryId').touched)
+                ">
+                <small class="error-message">Please select sub category</small>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" formGroupName="shopDetails">
+          <div class="col-6">
+            <div>
+              <label class="form-label"> Keyword </label>
+              <input formControlName="keyword" type="text" id="keyword" name="keyword" class="form-control"
+                placeholder="Enter keyword" />
+            </div>
+            <div class="text-left">
+              <ng-container *ngIf="
+                  form['shopDetails'].get('keyword').invalid &&
+                  (form['shopDetails'].get('keyword').dirty ||
+                    form['shopDetails'].get('keyword').touched)
+                ">
+                <small class="error-message">Enter keyword</small>
+              </ng-container>
+            </div>
+          </div>
+          <div class="col-6">
+            <div>
+              <label class="form-label"> GST Number </label>
+              <input formControlName="gstNumber" type="text" id="keyword" name="keyword" class="form-control"
+                placeholder="Enter keyword" />
+            </div>
+            <div class="text-left">
+              <ng-container *ngIf="
+                  form['shopDetails'].get('gstNumber').invalid &&
+                  (form['shopDetails'].get('gstNumber').dirty ||
+                    form['shopDetails'].get('gstNumber').touched)
+                ">
+                <small class="error-message">Enter GST Number </small>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <!-- address -->
+        <div class="card mt-4">
+          <div class="card-header">
+            Address
+            <div class="card-body">
+              <div formGroupName="address">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div>
+                      <label class="form-label"> Line 1 </label>
+                      <input formControlName="line1" type="text" id="line1" name="line1" class="form-control"
+                        placeholder="Enter line1" />
+                    </div>
+                    <div class="text-left">
+                      <ng-container *ngIf="
+                          form['address'].get('line1').invalid &&
+                          (form['address'].get('line1').dirty ||
+                            form['address'].get('line1').touched)
+                        ">
+                        <small class="error-message">Enter line1</small>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mt-2">
+                    <div>
+                      <label class="form-label"> Line 2 </label>
+                      <input formControlName="line2" type="text" id="line2" name="line2" class="form-control"
+                        placeholder="Enter line2" />
+                    </div>
+                    <div class="text-left">
+                      <ng-container *ngIf="
+                          form['address'].get('line2').invalid &&
+                          (form['address'].get('line2').dirty ||
+                            form['address'].get('line2').touched)
+                        ">
+                        <small class="error-message">Enter line2</small>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mt-2">
+                    <div>
+                      <label class="form-label"> City </label>
+                      <input formControlName="city" type="tel" id="city" class="form-control"
+                        placeholder="Enter City" />
+                    </div>
+                    <div class="text-left">
+                      <ng-container *ngIf="
+                          form['address'].get('city').invalid &&
+                          (form['address'].get('city').dirty ||
+                            form['address'].get('city').touched)
+                        ">
+                        <small class="error-message">Enter city</small>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mt-2">
+                    <div>
+                      <label class="form-label"> State </label>
+                      <input formControlName="state" type="text" id="state" name="state" class="form-control"
+                        placeholder="Enter State" />
+                    </div>
+                    <div class="text-left">
+                      <ng-container *ngIf="
+                          form['address'].get('state').invalid &&
+                          (form['address'].get('state').dirty ||
+                            form['address'].get('state').touched)
+                        ">
+                        <small class="error-message">Enter state</small>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mt-2">
+                    <div>
+                      <label class="form-label"> Pin Code </label>
+                      <input formControlName="pinCode" type="text" id="pinCode" name="pinCode" class="form-control"
+                        minlength="6" maxlength="6" placeholder="Enter Pin Code" />
+                    </div>
+                    <div class="text-left">
+                      <ng-container *ngIf="
+                          form['address'].get('pinCode').invalid &&
+                          (form['address'].get('pinCode').dirty ||
+                            form['address'].get('pinCode').touched)
+                        ">
+                        <small class="error-message">Enter pincode</small>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- links -->
+        <div class="card">
+          <div>
+            <div class="card-header">
+              Links
+              <div class="card-body">
+                <div formGroupName="shopDetails">
+                  <div formGroupName="links">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label class="form-label">Facebook</label>
+                          <input formControlName="facebook" type="text" id="facebook" name="facebook"
+                            class="form-control" placeholder="Enter Facebook Link" />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label class="form-label"> Instagram </label>
+                          <input formControlName="instagram" type="text" id="instagram" class="form-control"
+                            placeholder="Enter instagram link" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label class="form-label">Youtube</label>
+                          <input formControlName="youtube" type="text" id="youtube" name="youtube" class="form-control"
+                            placeholder="Enter Youtube Link" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <div class="card-header">
+              Location
+              <div class="card-body">
+                <div formGroupName="shopDetails">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label">Latitude</label>
+                        <input type="number" formControlName="lat" class="form-control" placeholder="Enter latitude" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label"> Longitude </label>
+                        <input type="number" formControlName="lng" class="form-control" placeholder="Enter longitude" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <app-web-link-list [shopId]="shopId"></app-web-link-list>
+
+        <!-- END OF ADDRESS -->
+        <div class="row mt-2" formGroupName="shopDetails">
+          <div class="col-md-12">
+            <div class="mb-3">
+              <label class="form-label">
+                About Us
+                <span class="text-danger">*</span>
+              </label>
+              <textarea formControlName="aboutUs" rows="3" type="text" class="form-control"
+                placeholder="Enter About Us">
+              </textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" formGroupName="shopDetails">
+          <div class="col-md-12">
+            <div class="mb-3">
+              <label class="form-label">
+                Do you want booking service ?
+                <span class="text-danger">*</span>
+              </label>
+              <input formControlName="isBookingService" id="isBookingService" class="check-btn" type="checkbox" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row" formGroupName="shopDetails">
+          <div class="col-md-12">
+            <div class="mb-3">
+              <label class="form-label">
+                Do you want live location ?
+              </label>
+              <input formControlName="trackLiveLocation" id="trackLiveLocation" class="check-btn" type="checkbox" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row" formGroupName="shopDetails">
+          <div class="col-md-12">
+            <div class="mb-3">
+              <label class="form-label">
+                Do you want to change shop location ?
+                <!-- <span class="text-danger">*</span> -->
+              </label>
+              <input formControlName="isChangeLocation" id="isChangeLocation" class="check-btn" type="checkbox" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-9 pt-3" *ngIf="!form.profilePicture.value">
+                <div class="form-group satFat-logoBody">
+                  <label for="Logo">Profile Picture
+                    <span class="text-danger">*</span>
+                  </label>
+                  <ngx-file-drop class="ngx-fileDropBody" dropZoneClassName="satFat-dropZoneBody imgBorderYes"
+                    contentClassName="satFat-contentBody" (onFileDrop)="dropped($event, 'profilePicture')"
+                    (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)" accept="image/jpeg, image/png">
+                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                      <div class="align-self-center"></div>
+                      <div class="imgNone d-flex flex-column text-center">
+                        <div class="cloudIcon">
+                          <i class="fa fa-cloud-upload"></i>
+                        </div>
+                        Upload File (Drag & Drop)
+                        <div class="text-dark">OR</div>
+                        <button type="button" (click)="openFileSelector()">
+                          Browse File
+                        </button>
+                      </div>
+                    </ng-template>
+                  </ngx-file-drop>
+                </div>
+                <div class="text-left" *ngFor="let error of errorMessages.profilePicture">
+                  <ng-container *ngIf="
+                      form.profilePicture.hasError(error.type) &&
+                      (form.profilePicture.dirty || form.profilePicture.touched)
+                    ">
+                    <small class="error-message">{{ error.message }}</small>
+                  </ng-container>
+                </div>
+              </div>
+
+              <div class="col-md-3 text-center align-self-center" *ngIf="form.profilePicture.value">
+                <i (click)="removeUploadedImage('profilePicture')" class="delete-badge fa fa-trash shadow-sm"></i>
+                <img [src]="form.profilePicture.value" class="img-fluid img-size" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" formGroupName="shopDetails">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-9 pt-3" *ngIf="!shopDetailForm.bannerImages.value">
+                <div class="form-group satFat-logoBody">
+                  <label for="Banner Images">Banner Images
+                    <span class="text-danger">*</span>
+                  </label>
+                  <ngx-file-drop class="ngx-fileDropBody" dropZoneClassName="satFat-dropZoneBody imgBorderYes"
+                    contentClassName="satFat-contentBody" (onFileDrop)="dropped($event, 'bannerImages')"
+                    (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)" accept="image/jpeg, image/png">
+                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                      <div class="align-self-center"></div>
+                      <div class="imgNone d-flex flex-column text-center">
+                        <div class="cloudIcon">
+                          <i class="fa fa-cloud-upload"></i>
+                        </div>
+                        Upload File (Drag & Drop)
+                        <div class="text-dark">OR</div>
+                        <button type="button" (click)="openFileSelector()">
+                          Browse File
+                        </button>
+                      </div>
+                    </ng-template>
+                  </ngx-file-drop>
+                </div>
+                <div class="text-left">
+                  <ng-container *ngIf="
+                      form['shopDetails'].get('bannerImages').invalid &&
+                      (form['shopDetails'].get('bannerImages').dirty ||
+                        form['shopDetails'].get('bannerImages').touched)
+                    ">
+                    <small class="error-message">please upload a bannerImages</small>
+                  </ng-container>
+                </div>
+              </div>
+
+              <div class="col-md-3 text-center align-self-center" *ngIf="shopDetailForm.bannerImages.value">
+                <i (click)="removeUploadedImage('bannerImages')" (click)="removeImageFromDb('bannerImages')"
+                  class="delete-badge fa fa-trash shadow-sm"></i>
+                <img [src]="shopDetailForm.bannerImages.value" class="img-fluid img-size" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <button type="button" class="btn btn-success" *ngIf="!this.shopForm.value._id" (click)="create()">
+            Save
+          </button>
+          <button type="button" class="btn btn-success" *ngIf="this.shopForm.value._id" (click)="update()">
+            Update
+          </button>
+          <button (click)="goBack()" class="btn btn-outline-danger mx-2">
+            Cancel
+          </button>
+        </div>
+      </div>
+
+      <div class="card-body">
+
+        <!-- porter token -->
+        <div class="card mt-4" *ngIf="userService?.currentUserSubject?.value?.role == 'SUPER_ADMIN'">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-8">
+                <label class="form-label">Add Porter Token</label>
+                <input [(ngModel)]="porterToken" [ngModelOptions]="{ standalone: true }" type="text"
+                  class="form-control" placeholder="Enter Porter Token" />
+              </div>
+              <div class="col-4 porterRequestbtn">
+                <button (click)="addPorterToken()" class="btn btn-outline-danger mx-2">
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--porter token-->
+
+
+        <!-- for custom catalogue button name -->
+        <div class="card mt-4" *ngIf="userService?.currentUserSubject?.value?.role == 'SUPER_ADMIN'">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-8">
+                <label class="form-label">Add Custom Catalogue button</label>
+                <input [(ngModel)]="catalogueBtn" [ngModelOptions]="{ standalone: true }" type="text"
+                  class="form-control" placeholder="Enter Custom Catalogue button name" />
+              </div>
+              <div class="col-4 porterRequestbtn">
+                <button (click)="addCatalogueBtn()" class="btn btn-outline-danger mx-2">
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- for custom service button name -->
+        <div class="card mt-4" *ngIf="userService?.currentUserSubject?.value?.role == 'SUPER_ADMIN'">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-8">
+                <label class="form-label">Add Custom Service button</label>
+                <input [(ngModel)]="serviceBtn" [ngModelOptions]="{ standalone: true }" type="text" class="form-control"
+                  placeholder="Enter Custom Catalogue button name" />
+              </div>
+              <div class="col-4 porterRequestbtn">
+                <button (click)="addServiceBtn()" class="btn btn-outline-danger mx-2">
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- proceed to checkout -->
+        <div class="card mt-4" *ngIf="userService?.currentUserSubject?.value?.role == 'SUPER_ADMIN'">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-8">
+                <label class="form-label">Add proceed to checkout page button</label>
+                <input [(ngModel)]="proceedToCheckoutBtn" [ngModelOptions]="{ standalone: true }" type="text"
+                  class="form-control" placeholder="Enter proceed to checkout page button name" />
+              </div>
+              <div class="col-4 porterRequestbtn">
+                <button (click)="addProceedToCheckoutBtn()" class="btn btn-outline-danger mx-2">
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- proceed to buy -->
+        <div class="card mt-4" *ngIf="userService?.currentUserSubject?.value?.role == 'SUPER_ADMIN'">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-8">
+                <label class="form-label">Add proceed to buy page button</label>
+                <input [(ngModel)]="proceedToBuyBtn" [ngModelOptions]="{ standalone: true }" type="text"
+                  class="form-control" placeholder="Enter proceed to buy page button name" />
+              </div>
+              <div class="col-4 porterRequestbtn">
+                <button (click)="addProceedToBuyBtn()" class="btn btn-outline-danger mx-2">
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- delivery address -->
+        <div class="card mt-4" *ngIf="userService?.currentUserSubject?.value?.role == 'SUPER_ADMIN'">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-8">
+                <label class="form-label">Add delivery address page button</label>
+                <input [(ngModel)]="deliveryAddressConfirmBtn" [ngModelOptions]="{ standalone: true }" type="text"
+                  class="form-control" placeholder="Enter place order page button name" />
+              </div>
+              <div class="col-4 porterRequestbtn">
+                <button (click)="addDeliveryAddressConfirmBtn()" class="btn btn-outline-danger mx-2">
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- instruction -->
+        <div class="card mt-4" *ngIf="userService?.currentUserSubject?.value?.role == 'SUPER_ADMIN'">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-8">
+                <label class="form-label">Add place order page button</label>
+                <input [(ngModel)]="placeOrderBtn" [ngModelOptions]="{ standalone: true }" type="text"
+                  class="form-control" placeholder="Enter place order page button name" />
+              </div>
+              <div class="col-4 porterRequestbtn">
+                <button (click)="addPlaceOrderBtn()" class="btn btn-outline-danger mx-2">
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- shop discount message -->
+        <div class="card mt-4">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-8">
+                <label class="form-label">Add Discount Message</label>
+                <input [(ngModel)]="discountMessage" [ngModelOptions]="{ standalone: true }" type="text"
+                  class="form-control" placeholder="Eg. 10% off" />
+              </div>
+              <div class="col-4 porterRequestbtn">
+                <button (click)="addDiscountMessage()" class="btn btn-outline-danger mx-2">
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex mt-3">
+          <label class="mt-0">
+            See Registration Info
+            <a type="button" class="ml-3 text-capitalize" (click)="deviceInfo()">
+              <u class="text-danger">Click Here</u>
+            </a>
+          </label>
+        </div>
+
+
+
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+// Variable overrides
+$primary: #d90000;
+$secondary: #c4c4c4;
+$success: #79b182;
+$info: #0dcaf0;
+$warning: #e8dc31;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #212529;
+$white: #ffffff;
+
+$primary-color: #ffe6e7;
+$primary-active-color: #be0202;
+// Variable overrides
+$theme-colors: (
+    primary: $primary,
+    secondary: $secondary,
+    success: $success,
+    info:$info,
+    warning: $warning,
+    danger: $danger,
+    light: $light,
+    dark:$dark,
+    white: $white
+);
